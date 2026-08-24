@@ -1,0 +1,38 @@
+<launch>
+  <!-- ============== TF静态坐标变换 统一激光相机坐标系 ============== -->
+  <!-- base_link → laser_link：激光雷达相对于车身底盘，尺子在车上量出来 -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base2laser"
+    args="【填A】  map laser_link"/>
+
+  <!-- laser_link → camera_link：lidar_camera_calibration标定输出结果 -->
+  <!-- 格式 x y z roll pitch yaw 父link 子link -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="laser2camera"
+    args="【填B】  laser_link camera_link"/>
+
+  <!-- ==============激光雷达驱动================ -->
+  <!-- 方案1：自己雷达原有launch，优先用include，把注释打开 -->
+   <include file="$(find lidar_nodes)/launch/lidar.launch"/> 
+
+  <!-- 方案2：节点形式，二选一，不要两个同时打开
+  <node name="rplidar_node" pkg="【填D】" type="【填E】">
+    <param name="serial_port" value="【填F】"/>
+    <param name="topic_name" value="【填G】"/>
+  </node> -->
+
+  <!-- ==============米文相机驱动================ -->
+  <!-- 填入你相机launch文件路径 -->
+  <!-- <include file="【填H】"/> -->
+
+  <!-- ==============YOLO检测节点================ -->
+ <node pkg="camera" type="" name="camera_yolo_node" output="screen">
+    <param name="camera_yolo_node" value="~/nrt_ws/src/camera/weights1/best.pt"/>
+  </node>
+
+  <!-- ==============八字绕环主程序================ -->
+  <node pkg="figure_eight_planner" type="figure_eight_planner" name="figure_eight_planner" output="screen">
+  </node>
+
+  <node pkg="figure_eight_planner" type="figure_eight_planner_node" name="figure_eight_planner_node" output="screen">
+    <param name="world_frame" value="map"/>
+  </node>
+</launch>

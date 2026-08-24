@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <node name="imu_node"
+          pkg="imu"      
+          type="imu_node">   
+  <!-- ==============激光雷达驱动================ -->
+  <!-- 方案1：自己雷达原有launch，优先用include，把注释打开 -->
+   <include file="$(find lidar_nodes)/launch/lidar.launch"/> 
+
+  <!-- 方案2：节点形式，二选一，不要两个同时打开
+  <node name="rplidar_node" pkg="【填D】" type="【填E】">
+    <param name="serial_port" value="【填F】"/>
+    <param name="topic_name" value="【填G】"/>
+  </node> -->
+    <!-- ==============YOLO检测节点================ -->
+ <node pkg="camera" type="" name="camera_yolo_node" output="screen">
+    <param name="camera_yolo_node" value="~/nrt_ws/src/camera/weights1/best.pt"/>
+  </node>
+    <!-- ==============================================
+    节点1：FSAE激光+视觉融合SLAM定位建图节点
+    作用：接收激光锥桶、视觉颜色、GPS、IMU，生成全局锥桶地图+车辆全局位姿
+    输出话题：/vehicle_pose、/cone_map
+    ============================================== -->
+    <node name="high_speed_path_follow_node"
+          pkg="high_speed_path_follow"      
+          type="high_speed_path_follow_node">       
+
+        
+
+              
+
+        <param name="~imu_init_wait_time" value="3.0"/>
+        <!-- 含义：上电后等待3秒，收集IMU+GPS数据完成世界坐标系原点初始化；场地启动慢可加大到5.0，快速调试可改为1.5 -->
+
+        <!-- 【GPS经纬度有效范围过滤】仅该经纬度内GPS才参与定位，过滤场外无效GPS杂讯（北京区域） -->
+        <param name="~gps_lat_min" value="30.0"/>   <!-- 最小纬度，低于该值GPS数据直接丢弃 -->
+        <param name="~gps_lat_max" value="40.0"/>   <!-- 最大纬度，高于该值GPS数据直接丢弃 -->
+        <param name="~gps_lon_min" value="110.0"/>  <!-- 最小经度，过滤场外漂移GPS -->
+        <param name="~gps_lon_max" value="125.0"/>  <!-- 最大经度，限定比赛场地地理区间 -->
+
+        <!-- 【相机安装偏移量】仅旧代码兼容保留，当前激光走base_link不再使用，无需修改 -->
+        <param name="~camera_offset_x" value="0.5"/>  <!-- 相机相对车体X向前偏移(m) -->
+        <param name="~camera_offset_y" value="0.0"/>  <!-- 相机相对车体Y横向偏移(m) -->
+        <param name="~camera_offset_z" value="0.3"/>  <!-- 相机相对车体Z高度偏移(m) -->
+
+        <!-- 【锥桶地图融合参数】同颜色锥桶坐标合并阈值 -->
+        <param name="~cone_merge_distance_same_color" value="2.5"/>
+        <!-- 单位：米；两个同颜色锥桶距离小于该值，判定为同一个锥桶，坐标加权平均融合；锥桶密集调小至1.5，稀疏场地调大至3.0 -->
+
+        <!-- 【不同颜色锥桶冲突判定阈值】 -->
+        <param name="~cone_merge_distance_diff_color" value="1.5"/>
+        <!-- 单位：米；不同颜色锥桶距离小于该值判定识别冲突；距离过近且置信度低会替换旧锥桶；冲突多改小，识别少改大 -->
+
+        <!-- 【激光点与视觉颜色匹配最大距离阈值】给激光锥桶绑定视觉颜色 -->
+        <param name="~laser_visual_match_thresh" value="1.2"/>
+        <!-- 单位：米；激光锥桶坐标附近1.2米内的视觉检测结果，赋予该锥桶颜色；相机标定准可缩小到0.8，标定差放宽到2.0 -->
+
+        <!-- 【锥桶生命周期超时时间】过期锥桶自动从地图删除 -->
+        <param name="~cone_timeout" value="99999999999.0"/>
+        <!-- 单位：秒；永久保留锥桶地图；需要动态清理旧锥桶可改为60.0（60秒无检测自动删除） -->
+
+        <!-- 【可视化地图窗口尺寸参数】 -->
+        <param name="~vis_map_size" value="60"/>
+        <!-- 单位：米；可视化窗口总边长60米；场地大改100，小场地改30，缩放可视化画面范围 -->
+    </node>
+
+    <!-- ==============================================
+    节点2：全局路径规划节点
+    作用：接收SLAM全局锥桶地图、车辆位姿，计算赛道中心线，输出控制路径
+    输入话题：/vehicle_pose、/cone_map
+    输出话题：/planned_path 下发给底盘控制节点
+    ============================================== -->
+    <node name="high_speed_path_slam_node"
+          pkg="high_speed_path_follow"      
+          output="screen"
+          respawn="false">
+    </node>
+
+</launch>

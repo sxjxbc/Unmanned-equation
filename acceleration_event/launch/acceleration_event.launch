@@ -1,0 +1,25 @@
+
+  <!-- ==============激光雷达驱动================ -->
+  <!-- 方案1：自己雷达原有launch，优先用include，把注释打开 -->
+   <include file="$(find lidar_nodes)/launch/lidar.launch"/> 
+
+  <!-- 方案2：节点形式，二选一，不要两个同时打开
+  <node name="rplidar_node" pkg="【填D】" type="【填E】">
+    <param name="serial_port" value="【填F】"/>
+    <param name="topic_name" value="【填G】"/>
+  </node> -->
+
+  <!-- ==============米文相机驱动================ -->
+  <!-- 填入你相机launch文件路径 -->
+  <!-- <include file="【填H】"/> -->
+
+  <!-- ==============YOLO检测节点================ -->
+  <node pkg="camera" type="" name="camera_yolo_node" output="screen">
+    <param name="camera_yolo_node" value="~/nrt_ws/src/camera/weights1/best.pt"/>
+  </node>
+
+  <!-- ==============直线加速主程序================ -->
+  <node pkg="acceleration_event" type="acceleration_event_node" name="acceleration_event_node" output="screen">
+    <param name="world_frame" value="base_link"/>
+  </node>
+</launch>
