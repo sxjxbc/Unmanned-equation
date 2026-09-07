@@ -1,0 +1,8 @@
+prefix=/home/lty/fsac_ws/install
+
+Name: cone_traditional_perception
+Description: Description of cone_traditional_perception
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp cv_bridge msgs

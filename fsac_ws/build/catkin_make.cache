@@ -1,0 +1,2 @@
+cone_traditional_perception
+-DCATKIN_DEVEL_PREFIX=/home/lty/fsac_ws/devel -DCMAKE_INSTALL_PREFIX=/home/lty/fsac_ws/install -G Unix Makefiles
