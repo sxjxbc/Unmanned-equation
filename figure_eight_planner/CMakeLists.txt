@@ -21,6 +21,7 @@ catkin_package(
     message_runtime
 )
 
+<<<<<<< HEAD
 ###################################
 ## Python 节点安装（roslaunch type= 依赖）
 ###################################
@@ -37,3 +38,5 @@ install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
+=======
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749

@@ -3,7 +3,11 @@
 """
 FSAE Formula Student - Figure-8 Track Path Planning Module
 八字赛道路径规划模块 v3.3
+<<<<<<< HEAD
 修改：输入源改为 激光雷达聚类 /clustered_points(PoseArray) + 视觉 /visual_cone_array(ConeArray)时空融合
+=======
+修改：输入源改为 激光雷达Clustered_point(PoseArray) + 视觉Conemap(ConeArray)时空融合
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
 """
 
 from __future__ import print_function
@@ -119,15 +123,24 @@ class Figure8PathPlanner(object):
         self.latest_laser_msg = None
         self.latest_visual_msg = None
 
+<<<<<<< HEAD
         # 订阅：激光聚类点 PoseArray（与 lidar_nodes/clustering.py 发布话题一致）；视觉ConeArray
         self.laser_sub = rospy.Subscriber("/clustered_points", PoseArray, self.laser_callback, queue_size=10)
+=======
+        # 订阅：激光聚类点 PoseArray；视觉ConeArray
+        self.laser_sub = rospy.Subscriber("/Clustered_point", PoseArray, self.laser_callback, queue_size=10)
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
         self.visual_sub = rospy.Subscriber("/visual_cone_array", ConeArray, self.visual_callback, queue_size=10)
 
         self.path_pub = rospy.Publisher('/planned_path', Path, queue_size=10)
         
         rospy.loginfo("=" * 80)
         rospy.loginfo("[八字赛道规划器] v3.3 激光聚类+视觉融合版本")
+<<<<<<< HEAD
         rospy.loginfo("[输入] 激光：/clustered_points(PoseArray) | 视觉：/visual_cone_array(ConeArray)")
+=======
+        rospy.loginfo("[输入] 激光：/Clustered_point(PoseArray) | 视觉：/Conemap(ConeArray)")
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
         rospy.loginfo("[赛道] 内圈直径=%.2fm，外圈直径=%.2fm，圆心距=%.2fm",
                      self.circle_radius_inner * 2, self.circle_radius_outer * 2,
                      self.circle_spacing)

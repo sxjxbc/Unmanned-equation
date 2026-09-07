@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 FSAE Formula Student Autonomous Vehicle - Optimized Localization and Mapping Module
+<<<<<<< HEAD
 修改：输入源改为激光雷达聚类 /clustered_points(PoseArray)，颜色来自视觉ConeDetection
+=======
+修改：输入源改为激光雷达聚类 /Clustered_point(PoseArray)，颜色来自视觉ConeDetection
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
 坐标系：激光输出 base_link；输出世界map坐标系
 """
 
@@ -144,8 +148,13 @@ class FSAESLAMNode(object):
         # ========== 修改订阅 ==========
         self.gps_sub = rospy.Subscriber('/GPS_data', NavSatFix, self.gps_callback, queue_size=10)
         self.imu_sub = rospy.Subscriber('/imu_data', Imu, self.imu_callback, queue_size=50)
+<<<<<<< HEAD
         # 激光聚类点 PoseArray（与 lidar_nodes/clustering.py 发布话题一致）
         self.laser_sub = rospy.Subscriber('/clustered_points', PoseArray, self.laser_cone_callback, queue_size=20)
+=======
+        # 激光聚类点 PoseArray
+        self.laser_sub = rospy.Subscriber('/Clustered_point', PoseArray, self.laser_cone_callback, queue_size=20)
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
         # 保留视觉，只拿颜色，不拿位置
         self.visual_sub = rospy.Subscriber('/perception/cones', ConeDetection, self.visual_color_cache_callback, queue_size=20)
 
@@ -153,7 +162,11 @@ class FSAESLAMNode(object):
         self.cone_map_pub = rospy.Publisher('/cone_map', ConeArray, queue_size=10)
         
         print("\n" + "=" * 60)
+<<<<<<< HEAD
         rospy.loginfo("[FSAE SLAM] Node started -- INPUT: LiDAR /clustered_points(PoseArray) + Visual color")
+=======
+        rospy.loginfo("[FSAE SLAM] Node started -- INPUT: LiDAR /Clustered_point(PoseArray) + Visual color")
+>>>>>>> 2b94d0e604c68b4a4b697238211388d6cf586749
         rospy.loginfo("[坐标系说明]")
         rospy.loginfo("  激光输出坐标系: base_link（车体）")
         rospy.loginfo("  世界输出坐标系: map")
