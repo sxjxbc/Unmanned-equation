@@ -1,0 +1,26 @@
+cone_detector/
+├── CMakeLists.txt
+├── package.xml
+├── README.md
+│
+├── msg/
+│   ├── ConeDetection.msg
+│   └── ConeDetectionArray.msg
+│
+├── scripts/
+│   ├── cone_detector_node.py        ← 主检测节点
+│   ├── cone_decision_consumer.py    ← 决策订阅示例
+│   ├── export_to_onnx.py            ← PT→ONNX 导出
+│   ├── convert_to_tensorrt.py       ← ONNX→TRT 转换
+│   └── benchmark_detector.py        ← 推理性能测试
+│
+├── launch/
+│   └── cone_detector.launch
+│
+├── config/
+│   └── detector_params.yaml
+│
+└── models/                          ← 手动放入模型文件
+    ├── yolov6n_cone.pt
+    ├── yolov6n_cone.onnx
+    └── yolov6n_cone.engine

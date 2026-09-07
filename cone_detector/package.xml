@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>cone_detector</name>
+  <version>1.0.0</version>
+  <description>
+    ROS1 车载实时锥桶检测系统
+    - 支持 TensorRT / ONNX Runtime 推理加速
+    - 三色锥桶分类：红色(A) / 黄色(B) / 蓝色(C)
+    - 适配 Jetson AGX Xavier / Orin 工控机平台
+  </description>
+
+  <maintainer email="subin@example.com">subin</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- ROS 标准依赖 -->
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>message_generation</depend>
+  <depend>roscpp</depend>
+
+  <!-- 消息生成 -->
+  <exec_depend>message_runtime</exec_depend>
+
+  <!-- 推理依赖（运行时） -->
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+
+  <!-- 导出工具依赖（可选） -->
+  <exec_depend>python3-torch</exec_depend>
+  <exec_depend>python3-onnx</exec_depend>
+
+  <!-- 可选：TensorRT（Jetson 预装） -->
+  <exec_depend>tensorrt</exec_depend>
+  <exec_depend>python3-pycuda</exec_depend>
+
+  <export>
+  </export>
+</package>

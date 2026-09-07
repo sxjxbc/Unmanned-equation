@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+  八字绕环 · 激光聚类 + 视觉融合路径规划 一键启动
+  包名 = bazi（目录名 figure_eight_planner，package.xml 里 <name>bazi</name>）
+
+  [2026-09-03 融合修复配套改动]
+  1) pkg 由 figure_eight_planner 更正为 bazi（否则 roslaunch 找不到包，整文件起不来）
+  2) 删除不存在的 type="figure_eight_planner" 旧条目，仅保留 figure_eight_planner_node.py
+  3) 新增视觉桥接节点 cone_detection_to_array：
+     /perception/cones(单锥 ConeDetection, 相对激光坐标) 经 0.5s 时间窗累积 → /visual_cone_array(ConeArray)
+  4) static_transform_publisher 补齐完整 7 参（原写法只有 frame 名，节点必然退出）；
+     融合算法是直接坐标比较、不查 TF，默认全 0 即可运行，TF 仅供 rviz/其它节点
+  5) 视觉 YOLO：camera/yolo_camera.py 无 package.xml、不是 catkin 包，
+     不能用 <node pkg="camera"> 启动，见下方直启方式注释
+-->
+<launch>
+  <!-- ============== TF 静态坐标变换（仅可视化/外部节点用，融合算法不依赖） ============== -->
+  <!-- base_link → laser_link：激光雷达装车位姿，现场按尺子量填，如 0.15 0 0.35 0 0 0 -->
+  <arg name="base2laser_tf" default="0 0 0 0 0 0"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base2laser"
+        args="$(arg base2laser_tf) base_link laser_link"/>
+
+  <!-- laser_link → camera_link：lidar_camera_calibration 标定输出，如 0 0.1 0.2 0 0.05 0 -->
+  <arg name="laser2camera_tf" default="0 0 0 0 0 0"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="laser2camera"
+        args="$(arg laser2camera_tf) laser_link camera_link"/>
+
+  <!-- ============== 激光雷达驱动 ============== -->
+  <!-- 方案1（默认）：Velodyne + 地面分割 + DBSCAN 聚类，输出 /clustered_points -->
+  <include file="$(find lidar_nodes)/launch/lidar.launch"/>
+
+  <!-- 方案2：若为其它雷达，替换成自己的驱动 launch，并确保最终发布 /clustered_points(PoseArray, velodyne系) -->
+
+  <!-- ============== 相机驱动（现场替换成米文/你的相机 launch） ============== -->
+  <!-- <include file="$(find 相机包)/launch/相机.launch"/> -->
+
+  <!-- ============== 视觉锥桶 YOLO 检测 ============== -->
+  <!-- camera/yolo_camera.py 不是 catkin 包，直接 python 运行：
+         python ~/nrt_ws/src/camera/yolo_camera.py
+       后端选择可用环境变量覆盖：NRT_DETECTOR=trt|onnx|yolov5
+       若后续把 camera 补成 catkin 包，可改用下行：
+  <node pkg="camera" type="yolo_camera.py" name="camera_yolo_node" output="screen"/> -->
+
+  <!-- ============== 锥桶桥接：单锥 → 时间窗累积 ConeArray ============== -->
+  <node pkg="bazi" type="conedetection_to_conearray_node.py" name="cone_detection_to_array" output="screen">
+    <param name="window_secs" value="0.5"/>
+    <param name="publish_period" value="0.1"/>
+  </node>
+
+  <!-- ============== 八字绕环主程序（激光聚类+视觉融合规划器 v3.3） ==============
+       输出 /planned_path，frame_id 硬编码为 map（节点不读 world_frame param） -->
+  <node pkg="bazi" type="figure_eight_planner_node.py" name="figure_eight_planner_node" output="screen"/>
+</launch>

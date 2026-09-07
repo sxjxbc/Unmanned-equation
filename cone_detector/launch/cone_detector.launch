@@ -1,0 +1,92 @@
+<launch>
+  <!--
+    cone_detector.launch
+    锥桶检测节点启动文件
+
+    用法:
+      # 默认参数（需通过 rosparam 设置 model_path）
+      roslaunch cone_detector cone_detector.launch
+
+      # 显式指定模型路径
+      roslaunch cone_detector cone_detector.launch \
+          model_path:=/path/to/yolo26n_cone.engine
+
+      # 带参数覆盖
+      roslaunch cone_detector cone_detector.launch \
+          model_path:=$(find cone_detector)/models/yolo26n_cone.engine \
+          confidence_thresh:=0.35 \
+          enable_vis:=false
+
+    依赖:
+      pip install --extra-index-url https://pypi.nvidia.com pycuda tensorrt opencv-python
+      # Jetson: sudo apt install tensorrt python3-pycuda
+  -->
+
+  <!-- ============================
+       参数声明（可覆盖）
+       ============================ -->
+
+  <!-- 模型路径（.engine 或 .onnx，必须） -->
+  <arg name="model_path"
+       default="$(find cone_detector)/models/yolo26n_cone.engine"/>
+  <arg name="confidence_thresh" default="0.25"/>
+  <arg name="nms_iou_thresh"    default="0.45"/>
+  <arg name="input_size"        default="640"/>
+  <arg name="enable_vis"        default="true"/>
+  <arg name="device"            default="cuda"/>
+  <arg name="image_topic"       default="/camera/image_raw"/>
+
+  <!-- ============================
+       参数加载
+       ============================ -->
+  <rosparam command="load"
+            file="$(find cone_detector)/config/detector_params.yaml"
+            substitutions="replace"/>
+
+  <!-- 覆盖 launch 参数 -->
+  <rosparam command="load" textfile="/dev/null" unless="$(eval model_path != '')"/>
+  <rosparam command="load" subst_copy="model_path=$(arg model_path)"/>
+
+  <!-- ============================
+       主检测节点
+       ============================ -->
+  <node name="cone_detector"
+        pkg="cone_detector"
+        type="cone_detector_node.py"
+        output="screen"
+        respawn="true"
+        respawn_delay="2">
+
+    <param name="model_path"         value="$(arg model_path)"/>
+    <param name="confidence_thresh"  value="$(arg confidence_thresh)"/>
+    <param name="nms_iou_thresh"     value="$(arg nms_iou_thresh)"/>
+    <param name="input_size"         value="$(arg input_size)"/>
+    <param name="enable_vis"         value="$(arg enable_vis)"/>
+    <param name="device"             value="$(arg device)"/>
+    <param name="image_topic"        value="$(arg image_topic)"/>
+  </node>
+
+  <!-- ============================
+       决策消费节点（可选）
+       用于订阅决策信号并执行车辆控制逻辑
+       ============================ -->
+  <!--
+  <node name="cone_decision_consumer"
+        pkg="cone_detector"
+        type="cone_decision_consumer.py"
+        output="screen"
+        required="false"/>
+  -->
+
+  <!-- ============================
+       图像可视化（可选，rqt_graph 查看）
+       订阅 /cone_detector/image 查看检测画面
+       ============================ -->
+  <node if="$(arg enable_vis)"
+        name="image_viewer"
+        pkg="image_view"
+        type="image_view"
+        args="/cone_detector/image"
+        required="false"/>
+
+</launch>

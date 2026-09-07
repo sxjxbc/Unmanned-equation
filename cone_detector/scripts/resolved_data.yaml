@@ -1,0 +1,8 @@
+path: C:\Users\subin\Desktop\锥桶检测\cone_detector\scripts\train\dataset
+train: C:\Users\subin\Desktop\锥桶检测\cone_detector\scripts\train\dataset\images/train
+val: C:\Users\subin\Desktop\锥桶检测\cone_detector\scripts\train\dataset\images/val
+nc: 3
+names:
+  0: red_cone
+  1: blue_cone
+  2: yellow_cone

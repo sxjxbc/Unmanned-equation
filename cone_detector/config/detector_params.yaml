@@ -1,0 +1,52 @@
+# ============================================================
+# cone_detector 参数配置文件
+# 路径: cone_detector/config/detector_params.yaml
+# ============================================================
+# 覆盖方式：在 launch 文件中通过 <param> 或 rosparam set 覆盖
+
+# ──────────────── 模型配置 ────────────────
+# 模型文件路径（.engine 或 .onnx）
+# 注意：.engine 必须在本机构建，不可跨平台复制
+# 示例：
+#   /home/jetson/catkin_ws/src/cone_detector/models/yolo26n_cone.engine
+#   /home/jetson/catkin_ws/src/cone_detector/models/yolo26n_cone.onnx
+model_path: "$(find cone_detector)/models/yolo26n_cone.engine"
+
+# ──────────────── 推理配置 ────────────────
+# 置信度阈值：低于此值的检测结果被过滤
+confidence_thresh: 0.25
+
+# NMS IOU 阈值：高于此值的重叠框被合并
+nms_iou_thresh: 0.45
+
+# 模型输入尺寸（像素）
+#   640 — 标准精度，速度适中
+#   416 — 更快，适合 Jetson 低功耗模式
+#   320 — 最快，适合算力受限场景
+input_size: 640
+
+# ──────────────── 推理设备 ────────────────
+# 推理后端选择：
+#   cuda  — TensorRT CUDA 加速（需要 GPU）
+#   cpu   — CPU 回退（速度较慢，用于调试）
+device: "cuda"
+
+# ──────────────── ROS 配置 ────────────────
+# 订阅图像话题（根据实际摄像头话题调整）
+image_topic: "/camera/image_raw"
+
+# 启用可视化图像发布（/cone_detector/image）
+# 生产环境可关闭节省带宽
+enable_vis: true
+
+# ──────────────── 决策阈值（可选）──────────
+# 当检测框面积占图像比例低于此值时，视为远处锥桶，降低优先级
+min_cone_area_ratio: 0.001
+
+# 当无锥桶检测时，输出默认决策状态
+# 决策信号：TURN_LEFT（红色→左转）/ TURN_RIGHT（蓝色→右转）/ STOP（黄色→停止）/ default（无锥桶）
+default_decision: "default"
+
+# ──────────────── 日志等级 ────────────────
+# ROS 日志级别（0=DEBUG, 1=INFO, 2=WARN, 3=ERROR, 4=FATAL）
+# log_level: 1

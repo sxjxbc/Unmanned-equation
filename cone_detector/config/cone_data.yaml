@@ -1,0 +1,29 @@
+# YOLO 格式锥桶检测数据集配置
+# 锥桶三分类：红色(A) / 蓝色(B) / 黄色(C)
+#
+# 数据集来源：C:\Users\subin\Desktop\新建数据集（已整理到此项目 scripts/train/dataset/）
+# 原始结构：JPEGImage/ (8890 张) + label/ (8873 个 YOLO txt)
+# 整理后：8865 张有效图像，按 8:2 随机划分
+#   train: 7092 张
+#   val:   1773 张
+#   过滤空标签: 7 个
+#
+# 类别分布（训练集估算）：
+#   0 (red_cone):    ~17154 框
+#   1 (blue_cone):   ~10834 框
+#   2 (yellow_cone): ~15413 框
+#   合计:            ~43401 框
+
+# ============================================================
+# 数据集绝对路径（每行冒号后紧跟路径，无多余空格）
+# ============================================================
+path: C:/Users/subin/Desktop/锥桶检测/cone_detector/scripts/train/dataset
+train: C:/Users/subin/Desktop/锥桶检测/cone_detector/scripts/train/dataset/images/train
+val: C:/Users/subin/Desktop/锥桶检测/cone_detector/scripts/train/dataset/images/val
+# ============================================================
+
+nc: 3
+names:
+    0: red_cone
+    1: blue_cone
+    2: yellow_cone

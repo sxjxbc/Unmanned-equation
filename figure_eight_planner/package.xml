@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>bazi</name>
+  <version>0.0.0</version>
+  <description>The path_planning package</description>
+
+  <maintainer email="user@todo.todo">Your Name</maintainer>
+  <license>BSD</license>
+
+  <!-- 构建工具依赖 -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- 编译依赖 -->
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+   <build_depend>msgs</build_depend>
+
+  <!-- 构建导出依赖 -->
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
+
+  <!-- 运行依赖 -->
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+    <exec_depend>msgs</exec_depend>
+  <depend>rospy</depend>
+  <!-- 可选：其他依赖（如fssim） -->
+  <!-- <depend>fssim</depend> -->
+</package>
