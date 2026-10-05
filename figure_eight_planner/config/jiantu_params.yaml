@@ -1,0 +1,32 @@
+# jiantu_lidar1.0.3.py 参数
+# 坐标系：雷达 X前 Y左，车辆/地图 X前 Y右
+
+# ================= GPS / IMU 初始化 =================
+imu_init_wait_time: 3.0
+gps_lat_min: 30.0
+gps_lat_max: 40.0
+gps_lon_min: 110.0
+gps_lon_max: 125.0
+
+# ================= 雷达外参 =================
+# 雷达在车辆坐标系中的安装位置（X前，Y右，Z上）
+lidar_offset_x: 2.11552
+lidar_offset_y: -0.02212
+lidar_offset_z: 0.28870
+
+# 雷达 Y 轴方向：VLP-16 ROS 系 Y 左，车辆 Y 右 → -1.0
+lidar_y_sign: -1.0
+
+# 雷达安装偏航角（度）
+lidar_yaw_offset_deg: 0.5
+
+# ================= 建图 =================
+cone_merge_distance: 1.2
+cone_timeout: 3.0
+confidence_decay_time: 1.5
+
+# ================= 可视化 =================
+vis_map_size: 60
+# Quality lidar interface and bounded acquisition-time pose matching.
+cone_input_mode: quality
+pose_time_tolerance: 0.25

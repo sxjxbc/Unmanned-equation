@@ -1,0 +1,22 @@
+<launch>
+  <node pkg="bazi_closed_loop" type="virtual_vcu_udp3.0.4.py" name="virtual_vcu" output="screen">
+    <rosparam file="$(find bazi_closed_loop)/config/vcu_params.yaml"/>
+  </node>
+
+  <node pkg="bazi_closed_loop" type="bazi_radar_simulator.py" name="radar" output="screen">
+    <rosparam file="$(find bazi_closed_loop)/config/radar_params.yaml"/>
+  </node>
+
+  <node pkg="bazi_closed_loop" type="jiantu_lidar1.0.3.py" name="jiantu" output="screen">
+    <rosparam file="$(find bazi_closed_loop)/config/jiantu_params.yaml"/>
+    <param name="cone_input_mode" value="legacy"/>
+  </node>
+
+  <node pkg="bazi_closed_loop" type="bazi_planner_bazi_v4.2.py" name="planner" output="screen">
+    <rosparam file="$(find bazi_closed_loop)/config/planner_params.yaml"/>
+  </node>
+
+  <node pkg="bazi_closed_loop" type="tracking_udp_v1.2.py" name="tracking" output="screen">
+    <rosparam file="$(find bazi_closed_loop)/config/tracking_params.yaml"/>
+  </node>
+</launch>

@@ -1,0 +1,10 @@
+# virtual_vcu_udp3.0.4.py 参数（只用于仿真）
+
+# 前悬长度（m），用于把"车头在起跑线前 15m"换算成后轴位置
+front_overhang: 0.7
+
+# 车辆模型参数（如果以后想从参数读，可以加）
+# wheelbase: 1.55
+# accel: 2.0
+# decel: 3.0
+# max_speed: 5.0

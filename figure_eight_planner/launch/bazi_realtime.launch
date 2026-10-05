@@ -1,0 +1,23 @@
+<launch>
+
+
+  <node pkg="figure_eight_planner" type="jiantu_lidar1.0.3.py" name="jiantu" output="screen">
+    <rosparam file="$(find figure_eight_planner)/config/jiantu_params.yaml"/>
+  </node>
+
+  <node pkg="figure_eight_planner" type="bazi_planner_bazi_v4.2.py" name="planner" output="screen">
+    <rosparam file="$(find figure_eight_planner)/config/jiantu_params.yaml"/>
+    <rosparam file="$(find figure_eight_planner)/config/planner_params.yaml"/>
+    <param name="lidar_region_enabled" value="true"/>
+    <param name="lidar_region_range" value="5.0"/>
+    <param name="lidar_region_half_width" value="4.0"/>
+    <param name="lidar_loss_grace" value="0.5"/>
+    <param name="lidar_loss_speed" value="1.0"/>
+  </node>
+
+  <node pkg="figure_eight_planner" type="tracking_udp_v1.2.py" name="tracking" output="screen">
+    <rosparam file="$(find figure_eight_planner)/config/tracking_params.yaml"/>
+  </node>
+
+  <!-- 实车不启动 virtual_vcu 和 radar_sim -->
+</launch>

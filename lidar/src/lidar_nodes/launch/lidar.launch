@@ -5,9 +5,24 @@
     <!-- Velodyne nodes  roslaunch velodyne_pointcloud VLP16_points.launch-->
     <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
     <!-- Initial filters -->
-    <node name="prefiltering" pkg="lidar_nodes" type="input_and_prefilter.py" output="screen"/>
+    <arg name="fov_degrees" default="270.0"/>
+    <arg name="max_range" default="5.0"/>
+    <node name="prefiltering" pkg="lidar_nodes" type="input_and_prefilter.py" output="screen">
+        <param name="fov_degrees" value="$(arg fov_degrees)"/>
+        <param name="max_range" value="$(arg max_range)"/>
+        <param name="max_z" value="0.8"/>
+    </node>
     <!-- Clustering -->
-    <node name="clustering" pkg="lidar_nodes" type="clustering.py" output="screen"/>
+    <node name="clustering" pkg="lidar_nodes" type="clustering.py" output="screen">
+        <param name="cone_min_points" value="5"/>
+        <param name="cone_max_height" value="0.60"/>
+        <param name="cone_max_radius" value="0.30"/>
+        <param name="cone_max_distance" value="$(arg max_range)"/>
+        <param name="epsilon_min" value="0.08"/>
+        <param name="epsilon_max" value="0.25"/>
+        <param name="cone_min_confidence" value="0.25"/>
+        <param name="processing_warn_seconds" value="0.10"/>
+    </node>
     <!-- Ground filtering -->
     <include file="$(find linefit_ground_segmentation_ros)/launch/segmentation.launch"/>
 

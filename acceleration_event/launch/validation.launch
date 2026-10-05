@@ -1,0 +1,28 @@
+<launch>
+  <arg name="gps_allow_unknown_covariance" default="false"/>
+  <arg name="cone_input_mode" default="quality"/>
+  <!-- Offline/replay validation. Do not launch other vehicle controllers. -->
+  <arg name="use_sim_time" default="true"/>
+  <arg name="log_dir" default="/tmp/acceleration_validation_logs"/>
+  <arg name="finish_distance" default="75.0"/>
+  <arg name="finish_start_mode" default="first_valid_pose"/>
+  <arg name="finish_start_x" default="0.0"/>
+  <arg name="finish_start_y" default="0.0"/>
+  <arg name="finish_axis_yaw" default="0.0"/>
+  <arg name="finish_confirm_samples" default="1"/>
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+  <include file="$(find acceleration_event)/launch/acceleration_event.launch">
+    <arg name="localization_mode" value="slam"/>
+    <arg name="cone_input_mode" value="$(arg cone_input_mode)"/>
+    <arg name="gps_allow_unknown_covariance" value="$(arg gps_allow_unknown_covariance)"/>
+    <arg name="enable_vehicle_output" value="false"/>
+    <arg name="enable_visualization" value="false"/>
+    <arg name="log_dir" value="$(arg log_dir)"/>
+    <arg name="finish_distance" value="$(arg finish_distance)"/>
+    <arg name="finish_start_mode" value="$(arg finish_start_mode)"/>
+    <arg name="finish_start_x" value="$(arg finish_start_x)"/>
+    <arg name="finish_start_y" value="$(arg finish_start_y)"/>
+    <arg name="finish_axis_yaw" value="$(arg finish_axis_yaw)"/>
+    <arg name="finish_confirm_samples" value="$(arg finish_confirm_samples)"/>
+  </include>
+</launch>

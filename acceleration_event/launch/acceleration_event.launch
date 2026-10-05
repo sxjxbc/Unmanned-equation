@@ -1,25 +1,128 @@
+<launch>
+  <arg name="gps_allow_unknown_covariance" default="false"/>
+  <arg name="cone_input_mode" default="quality"/>
+  <arg name="enable_vehicle_output" default="false"/>
+  <arg name="enable_visualization" default="true"/>
+  <arg name="localization_mode" default="slam"/>
+  <arg name="log_dir" default="/tmp/path_tracking_logs"/>
+  <arg name="can_dest_ip" default="192.168.0.7"/>
+  <arg name="can_dest_port" default="20005"/>
+  <arg name="can_self_port" default="11312"/>
+  <!-- Fixed map finish axis. Configured coordinates must match the localization map. -->
+  <arg name="finish_distance" default="75.0"/>
+  <arg name="finish_start_mode" default="first_valid_pose"/>
+  <arg name="finish_start_x" default="0.0"/>
+  <arg name="finish_start_y" default="0.0"/>
+  <arg name="finish_axis_yaw" default="0.0"/>
+  <arg name="finish_confirm_samples" default="1"/>
 
-  <!-- ==============激光雷达驱动================ -->
-  <!-- 方案1：自己雷达原有launch，优先用include，把注释打开 -->
-   <include file="$(find lidar_nodes)/launch/lidar.launch"/> 
+  <!-- 1. 建图节点 jiantu.py -->
+  <node pkg="acceleration_event" type="jiantu.py" name="fsae_slam_node" output="screen">
+    <param name="cone_input_mode" value="$(arg cone_input_mode)"/>
+    <param name="enable_visualization" value="$(arg enable_visualization)"/>
+    <param name="sensor_timeout" value="0.5"/>
+    <param name="alignment_tolerance" value="0.15"/>
+    <param name="pose_max_speed" value="12.0"/>
+    <param name="imu_init_wait_time" value="3.0"/>
+    <param name="gps_allow_unknown_covariance" value="$(arg gps_allow_unknown_covariance)"/>
+    <param name="gps_max_horizontal_variance" value="0.25"/>
+    <param name="init_min_samples" value="10"/>
+    <param name="init_max_gap" value="0.5"/>
+    <param name="init_position_tolerance" value="0.30"/>
+    <param name="init_yaw_tolerance_deg" value="3.0"/>
+    <param name="gps_lat_min" value="30.0"/>
+    <param name="gps_lat_max" value="40.0"/>
+    <param name="gps_lon_min" value="110.0"/>
+    <param name="gps_lon_max" value="125.0"/>
 
-  <!-- 方案2：节点形式，二选一，不要两个同时打开
-  <node name="rplidar_node" pkg="【填D】" type="【填E】">
-    <param name="serial_port" value="【填F】"/>
-    <param name="topic_name" value="【填G】"/>
-  </node> -->
+    <param name="lidar_offset_x" value="1.76618"/>
+    <param name="lidar_offset_y" value="-0.11304"/>
+    <param name="lidar_offset_z" value="0.42850"/>
+    <param name="lidar_y_sign" value="-1.0"/>
+    <param name="lidar_yaw_offset_deg" value="0.5"/>
 
-  <!-- ==============米文相机驱动================ -->
-  <!-- 填入你相机launch文件路径 -->
-  <!-- <include file="【填H】"/> -->
-
-  <!-- ==============YOLO检测节点================ -->
-  <node pkg="camera" type="" name="camera_yolo_node" output="screen">
-    <param name="camera_yolo_node" value="~/nrt_ws/src/camera/weights1/best.pt"/>
+    <param name="cone_merge_distance" value="0.8"/>
+    <param name="cone_timeout" value="3.0"/>
   </node>
 
-  <!-- ==============直线加速主程序================ -->
-  <node pkg="acceleration_event" type="acceleration_event_node" name="acceleration_event_node" output="screen">
-    <param name="world_frame" value="base_link"/>
+  <!-- 2. 实时直线规划器 zhixian_realtime.py -->
+  <node pkg="acceleration_event" type="zhixian_realtime.py" name="straight_line_planner_realtime" output="screen">
+    <param name="pose_timeout" value="0.5"/>
+    <param name="observation_hold_timeout" value="0.5"/>
+    <param name="track_width" value="3.0"/>
+    <param name="total_length" value="175.0"/>
+    <param name="local_path_length" value="30.0"/>
+    <param name="path_point_spacing" value="0.5"/>
+    <param name="blend_distance" value="6.0"/>
+
+    <param name="min_cone_confidence" value="0.25"/>
+    <param name="local_min_x" value="0.5"/>
+    <param name="local_max_x" value="24.0"/>
+    <param name="local_max_abs_y" value="4.0"/>
+    <param name="max_local_cones" value="20"/>
+    <param name="max_pair_count" value="2"/>
+    <param name="pair_row_min_spacing" value="1.5"/>
+    <param name="cone_row_spacing" value="5.0"/>
+    <param name="cone_row_spacing_tolerance" value="1.5"/>
+
+    <param name="pair_distance_min" value="2.3"/>
+    <param name="pair_distance_max" value="3.7"/>
+    <param name="pair_max_longitudinal_diff" value="1.5"/>
+    <param name="max_centerline_slope" value="0.25"/>
+
+    <!-- Learn initial map road direction; constrain changes relative to it. -->
+    <param name="straight_slope_limit" value="0.06"/>
+    <param name="max_slope_change" value="0.02"/>
+    <param name="slope_alpha" value="0.12"/>
+
+    <param name="centerline_alpha" value="0.15"/>
+    <param name="centerline_timeout" value="0.50"/>
+    <!-- Max perpendicular vehicle-to-map-line distance; inhibits instead of clipping. -->
+    <param name="max_center_offset" value="1.5"/>
+    <param name="publish_hz" value="10.0"/>
+  </node>
+
+  <!-- 3. 路径跟踪控制器 genzong_realtime.py -->
+  <node pkg="acceleration_event" type="genzong_realtime.py" name="path_tracking_controller" output="screen">
+    <param name="enable_vehicle_output" value="$(arg enable_vehicle_output)"/>
+    <param name="localization_mode" value="$(arg localization_mode)"/>
+    <param name="pose_timeout" value="0.5"/>
+    <param name="path_timeout" value="0.5"/>
+    <param name="path_observation_timeout" value="0.5"/>
+    <param name="pose_max_speed" value="12.0"/>
+    <param name="track_width" value="3.0"/>
+    <param name="max_vehicle_speed_mps" value="4.1667"/>
+    <param name="max_steering" value="0.28"/>
+    <param name="finish_distance" value="$(arg finish_distance)" type="double"/>
+    <param name="finish_start_mode" value="$(arg finish_start_mode)"/>
+    <param name="finish_start_x" value="$(arg finish_start_x)" type="double"/>
+    <param name="finish_start_y" value="$(arg finish_start_y)" type="double"/>
+    <param name="finish_axis_yaw" value="$(arg finish_axis_yaw)" type="double"/>
+    <param name="finish_confirm_samples" value="$(arg finish_confirm_samples)" type="int"/>
+    <param name="steering_sign" value="1.0"/>
+    <param name="max_steering_step" value="0.012"/>
+    <param name="fixed_speed" value="4.1667"/>
+
+    <param name="kp_lateral" value="0.48"/>
+    <param name="kd_lateral" value="0.05"/>
+    <param name="kp_heading" value="0.10"/>
+    <param name="kd_heading" value="0.01"/>
+    <param name="error_filter_alpha" value="0.12"/>
+
+    <param name="heading_weight_min" value="0.35"/>
+    <param name="heading_weight_full_lateral_error" value="0.80"/>
+    <param name="max_lateral_derivative" value="0.60"/>
+    <param name="max_heading_derivative" value="0.35"/>
+
+    <param name="lookahead_min" value="2.5"/>
+    <param name="lookahead_max" value="4.0"/>
+    <param name="lookahead_speed_gain" value="0.35"/>
+
+    <!-- The controller follows /planned_path only. No direct-line target blend. -->
+
+    <param name="log_dir" value="$(arg log_dir)"/>
+    <param name="can_dest_ip" value="$(arg can_dest_ip)"/>
+    <param name="can_dest_port" value="$(arg can_dest_port)"/>
+    <param name="can_self_port" value="$(arg can_self_port)"/>
   </node>
 </launch>

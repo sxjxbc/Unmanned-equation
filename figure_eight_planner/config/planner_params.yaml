@@ -1,0 +1,51 @@
+# bazi_planner_bazi_v4.2.py 参数
+# 坐标系：X前，Y右，yaw 右转为正
+
+# ================= 基础 =================
+rate: 20.0
+path_spacing: 0.4
+
+# ================= 双锥桶起点门 =================
+trigger_min_range: 2.0
+trigger_max_range: 18.0
+trigger_lateral_limit: 6.0
+gate_width_min: 2.4
+gate_width_max: 3.6
+gate_x_diff_max: 1.5
+gate_confirm_frames: 4
+gate_center_stability: 0.8
+
+# ================= 局部锥桶修正 =================
+cone_min_confidence: 0.15
+local_min_x: 1.0
+local_max_x: 18.0
+local_max_abs_y: 6.0
+local_pair_width_min: 2.4
+local_pair_width_max: 3.6
+local_pair_xdiff_max: 1.8
+local_max_pairs: 2
+max_center_correction: 1.0
+radar_correction_gain: 0.25
+radar_single_side_gain: 0.08
+max_yaw_correction: 0.25
+
+# ================= 路径 =================
+# 注意：entry_length 不要在这里写死，
+# 代码会用 15.0 + front_overhang 自动算。
+front_overhang: 0.7
+exit_length: 25.0
+finish_stop_distance: 23.0
+auto_start: true    # 仿真 true；实车改 false 接 RES Go
+
+# ================= 速度 =================
+max_speed: 3.5
+min_speed: 0.5
+curve_speed: 3.0
+entry_speed: 3.0
+a_max: 1.5
+a_min: 2.5
+end_decel_dist: 15.0
+
+#=============WAIT_GATE前阶段============
+approach_speed: 1.0 #前进速度m/s
+approach_max_length: 8.0 #最大前进距离，超过就停车报警

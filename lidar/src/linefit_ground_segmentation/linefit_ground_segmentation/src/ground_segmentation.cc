@@ -98,8 +98,8 @@ void GroundSegmentation::getLines(std::list<PointLine> *lines) {
   std::vector<std::thread> thread_vec(params_.n_threads);
   unsigned int i;
   for (i = 0; i < params_.n_threads; ++i) {
-    const unsigned int start_index = params_.n_segments / params_.n_threads * i;
-    const unsigned int end_index = params_.n_segments / params_.n_threads * (i+1);
+    const unsigned int start_index = params_.n_segments * i / params_.n_threads;
+    const unsigned int end_index = params_.n_segments * (i+1) / params_.n_threads;
     thread_vec[i] = std::thread(&GroundSegmentation::lineFitThread, this,
                                 start_index, end_index, lines, &line_mutex);
   }
@@ -159,8 +159,8 @@ void GroundSegmentation::assignCluster(std::vector<int>* segmentation) {
   std::vector<std::thread> thread_vec(params_.n_threads);
   const size_t cloud_size = segmentation->size();
   for (unsigned int i = 0; i < params_.n_threads; ++i) {
-    const unsigned int start_index = cloud_size / params_.n_threads * i;
-    const unsigned int end_index = cloud_size / params_.n_threads * (i+1);
+    const unsigned int start_index = cloud_size * i / params_.n_threads;
+    const unsigned int end_index = cloud_size * (i+1) / params_.n_threads;
     thread_vec[i] = std::thread(&GroundSegmentation::assignClusterThread, this,
                                 start_index, end_index, segmentation);
   }

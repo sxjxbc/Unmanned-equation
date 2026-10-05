@@ -1,0 +1,43 @@
+# bazi_radar_simulator.py 参数（只用于仿真）
+
+# 发布
+rate: 10.0
+frame_id: /velodyne
+
+# 外部真值
+use_external_pose: true
+pose_topic: /vehicle_pose_gt
+speed_topic: /vehicle_speed
+
+# auto_move 备用模式
+auto_move: false
+vehicle_speed: 2.0
+
+# 雷达视场 / 距离
+min_range: 1.0
+max_range: 25.0
+fov_deg: 100.0
+max_cones: 6
+
+# 噪声和漏检
+noise_std: 0.03
+z_noise_std: 0.01
+dropout_probability: 0.05
+
+#雷达外参
+lidar_offset_x: 2.11552
+lidar_offset_y: -0.02212
+
+# 赛道几何
+start_finish_x: 0.0
+gate_x: 0.0
+prioritize_gate: true
+cone_spacing: 3.0
+
+# 车辆初始位姿（前悬修正后）
+start_x: -15.7
+start_y: 0.0
+start_yaw_deg: 0.0
+
+# 前悬
+front_overhang: 0.7

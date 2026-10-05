@@ -1,0 +1,20 @@
+{
+  "recorded_date": "2026-10-05",
+  "evidence": "User-provided output from check_original_environment.sh in car",
+  "ubuntu_version_id": "18.04",
+  "ubuntu_pretty_name": "Ubuntu 18.04.6 LTS",
+  "kernel": "5.4.0-150-generic",
+  "ros_distro": "melodic",
+  "python": "2.7.17",
+  "numpy": "1.13.3",
+  "opencv": "3.2.0",
+  "packages": {
+    "open-vm-tools": "2:11.0.5-4ubuntu0.18.04.3",
+    "python-numpy": "1:1.13.3-2ubuntu1",
+    "python-opencv": "3.2.0+dfsg-4ubuntu0.1",
+    "python2.7": "2.7.17-1~18.04ubuntu1.11",
+    "ros-melodic-roslaunch": "1.14.13-1bionic.20221025.183434",
+    "ros-melodic-rospy": "1.14.13-1bionic.20221025.182746",
+    "ros-melodic-tf": "1.12.1-1bionic.20221025.192750"
+  }
+}

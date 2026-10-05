@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
 import rospy
 from sensor_msgs.msg import PointCloud2
 from visualization_msgs.msg import MarkerArray
@@ -8,14 +9,10 @@ from visualization_msgs.msg import Marker
 from geometry_msgs.msg import PoseArray
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import Point
+from mapping.msg import ConeArray, Cone
 import ros_numpy as rnp
 import numpy as np
-import uuid
-from sklearn.cluster import DBSCAN
-from sklearn import metrics
-from sklearn.datasets import make_blobs
-from sklearn.preprocessing import StandardScaler
-import random
+from scipy.spatial import cKDTree
 
 
 # ============================================================
@@ -46,7 +43,9 @@ R_MIN = 0.05
 R_MAX = 0.30
 
 # 最大有效检测距离，单位：m
-D_MAX = 30.0
+D_MAX = 5.0
+epsilon_min = 0.08
+epsilon_max = 0.25
 
 # 各特征权重
 W_N = 0.6
@@ -68,28 +67,28 @@ def get_PoseArray(idxs_by_cluster,
 
     pose_array = PoseArray()
     pose_array.header.stamp = timestamp
-    pose_array.header.frame_id = "/velodyne"
+    pose_array.header.frame_id = "velodyne"
 
     for _, idx in enumerate(clusters_keys):
 
         pose = Pose()
 
-        # Cone position
-        pose.position.x = \
-            nparray_obstacle_xy[
-                idxs_by_cluster[idx][-1]
-            ][0]
+        # Cluster centroid position
+        cluster_indices = idxs_by_cluster[idx]
 
-        pose.position.y = \
-            nparray_obstacle_xy[
-                idxs_by_cluster[idx][-1]
-            ][1]
+        pose.position.x = np.mean(
+            nparray_obstacle_xy[cluster_indices, 0]
+        )
 
-        pose.position.z = \
-            starray_obstacle_xyz['z'][
-                idxs_by_cluster[idx][-1]
-            ]
+        pose.position.y = np.mean(
+            nparray_obstacle_xy[cluster_indices, 1]
+        )
 
+        pose.position.z = np.mean(
+            starray_obstacle_xyz['z'][cluster_indices]
+        )
+
+        pose.orientation.w = 1.0
         pose_array.poses.append(pose)
 
     return pose_array
@@ -103,7 +102,7 @@ def get_cone_marker(timestamp, id, x, y, z, r, g, b, a):
 
     lidar_marker = Marker()
 
-    lidar_marker.header.frame_id = "/velodyne"
+    lidar_marker.header.frame_id = "velodyne"
     lidar_marker.header.stamp = timestamp
 
     lidar_marker.ns = "aux_marker"
@@ -133,7 +132,7 @@ def get_LiDAR_marker(timestamp):
 
     lidar_marker = Marker()
 
-    lidar_marker.header.frame_id = "/velodyne"
+    lidar_marker.header.frame_id = "velodyne"
     lidar_marker.header.stamp = timestamp
 
     lidar_marker.ns = "cone_markers"
@@ -178,7 +177,7 @@ def publish_markers_to_RVIZ(
 
         marker = Marker()
 
-        marker.header.frame_id = "/velodyne"
+        marker.header.frame_id = "velodyne"
         marker.header.stamp = timestamp
 
         marker.ns = "cone_markers"
@@ -200,15 +199,9 @@ def publish_markers_to_RVIZ(
 
         marker.pose.orientation.w = 1.0
 
-        marker.pose.position.x = \
-            nparray_obstacle_xy[
-                idxs_by_cluster[idx][-1]
-            ][0]
-
-        marker.pose.position.y = \
-            nparray_obstacle_xy[
-                idxs_by_cluster[idx][-1]
-            ][1]
+        center = np.mean(nparray_obstacle_xy[idxs_by_cluster[idx]], axis=0)
+        marker.pose.position.x = float(center[0])
+        marker.pose.position.y = float(center[1])
 
         marker.pose.position.z = 0
 
@@ -237,18 +230,13 @@ def preprocessing(msg):
     starray_obstacle_xyz = \
         rnp.point_cloud2.pointcloud2_to_array(msg)
 
-    starray_obstacle_xy = \
-        remove_field_num(
-            starray_obstacle_xyz,
-            2
-        )
-
-    nparray_obstacle_xy = \
-        starray_obstacle_xy.view(
-            np.float32
-        ).reshape(
-            starray_obstacle_xy.shape + (-1,)
-        )
+    starray_obstacle_xyz = starray_obstacle_xyz.reshape(-1)
+    finite_mask = (np.isfinite(starray_obstacle_xyz['x']) &
+                   np.isfinite(starray_obstacle_xyz['y']) &
+                   np.isfinite(starray_obstacle_xyz['z']))
+    starray_obstacle_xyz = starray_obstacle_xyz[finite_mask]
+    nparray_obstacle_xy = np.column_stack((starray_obstacle_xyz['x'],
+                                          starray_obstacle_xyz['y']))
 
     return timestamp, \
            nparray_obstacle_xy, \
@@ -305,68 +293,13 @@ def adaptive_dbscan(points,
         n_points - 1
     )
 
-    # ========================================================
-    # 计算点与点之间的欧氏距离矩阵
-    # ========================================================
-
-    diff = \
-        points[:, np.newaxis, :] - \
-        points[np.newaxis, :, :]
-
-    distance_matrix = np.sqrt(
-        np.sum(
-            diff ** 2,
-            axis=2
-        )
-    )
-
-    # ========================================================
-    # 公式(10)：计算每个点的自适应epsilon_i
-    # ========================================================
-
-    epsilon = np.zeros(
-        n_points,
-        dtype=float
-    )
-
-    for i in range(n_points):
-
-        # 复制当前点到其他所有点的距离
-        distances = \
-            distance_matrix[i].copy()
-
-        # 排除自身距离0
-        distances[i] = np.inf
-
-        # 取k个最近邻
-        nearest_distances = \
-            np.sort(
-                distances
-            )[:actual_k]
-
-        # epsilon_i为k近邻平均欧氏距离
-        epsilon[i] = np.mean(
-            nearest_distances
-        )
-
-    # ========================================================
-    # 公式(8)：计算每个点的局部邻域
-    # ========================================================
-
-    neighborhoods = []
-
-    for i in range(n_points):
-
-        # 注意：
-        # distance_matrix[i,i] = 0
-        # 因此这里会包含点自身
-        neighbors = np.where(
-            distance_matrix[i] <= epsilon[i]
-        )[0]
-
-        neighborhoods.append(
-            neighbors
-        )
+    # KD tree avoids allocating an N-by-N distance matrix.
+    tree = cKDTree(points)
+    distances, _ = tree.query(points, k=actual_k + 1)
+    epsilon = np.clip(np.mean(distances[:, 1:], axis=1),
+                      epsilon_min, epsilon_max)
+    neighborhoods = [sorted(tree.query_ball_point(points[i], epsilon[i]))
+                     for i in range(n_points)]
 
     # ========================================================
     # 公式(9)：判断核心点
@@ -752,7 +685,7 @@ def publish_to_perception(pose_array):
 # 主聚类函数
 # ============================================================
 
-def clustering(msg):
+def _clustering_frame(msg):
 
     increment_snapshot_counter()
 
@@ -771,6 +704,9 @@ def clustering(msg):
             "Empty obstacle point cloud."
         )
 
+        publish_to_perception(get_PoseArray({}, nparray_obstacle_xy,
+                                           starray_obstacle_xyz, timestamp))
+        publish_cones({}, {}, nparray_obstacle_xy, timestamp)
         return
 
     # ========================================================
@@ -881,63 +817,9 @@ def clustering(msg):
             cluster_id
         ] = confidence
 
-        # ====================================================
-        # 输出各项特征和置信度
-        # ====================================================
-
-        rospy.loginfo(
-            "========== LiDAR Cluster %d ==========",
-            cluster_id
-        )
-
-        rospy.loginfo(
-            "N_G = %d",
-            confidence['N_G']
-        )
-
-        rospy.loginfo(
-            "H_G = %.3f m",
-            confidence['H_G']
-        )
-
-        rospy.loginfo(
-            "R_G = %.3f m",
-            confidence['R_G']
-        )
-
-        rospy.loginfo(
-            "d = %.3f m",
-            confidence['d']
-        )
-
-        rospy.loginfo(
-            "s_N = %.3f",
-            confidence['s_N']
-        )
-
-        rospy.loginfo(
-            "s_H = %.3f",
-            confidence['s_H']
-        )
-
-        rospy.loginfo(
-            "s_R = %.3f",
-            confidence['s_R']
-        )
-
-        rospy.loginfo(
-            "s_d = %.3f",
-            confidence['s_d']
-        )
-
-        rospy.loginfo(
-            "C_lidar = %.3f",
-            confidence['C_lidar']
-        )
-
-        rospy.loginfo(
-            "======================================"
-        )
+    idxs_by_cluster = dict((key, indices) for key, indices in idxs_by_cluster.items()
+                           if accept_cluster(lidar_confidences[key], cluster_limits))
+    publish_cones(idxs_by_cluster, lidar_confidences, nparray_obstacle_xy, timestamp)
 
     # ========================================================
     # RVIZ显示
@@ -977,7 +859,7 @@ def increment_snapshot_counter():
     global_snapshot_counter = \
         global_snapshot_counter + 1
 
-    rospy.loginfo(
+    rospy.loginfo_throttle(1.0,
         global_snapshot_counter
     )
 
@@ -986,31 +868,66 @@ def increment_snapshot_counter():
 # Main
 # ============================================================
 
+def accept_cluster(features, limits):
+    values = [features[key] for key in ('N_G', 'H_G', 'R_G', 'd', 'C_lidar')]
+    if not all(np.isfinite(value) for value in values):
+        return False
+    return (features['N_G'] >= limits['min_points'] and
+            0.0 <= features['H_G'] <= limits['max_height'] and
+            0.0 <= features['R_G'] <= limits['max_radius'] and
+            0.0 <= features['d'] <= limits['max_distance'] and
+            limits['min_confidence'] <= features['C_lidar'] <= 1.0)
+
+
+def publish_cones(clusters, confidences, xy, timestamp):
+    msg = ConeArray()
+    msg.header.stamp = timestamp
+    msg.header.frame_id = 'velodyne'
+    for key in sorted(clusters):
+        center = np.mean(xy[clusters[key]], axis=0)
+        cone = Cone()
+        cone.x, cone.y = float(center[0]), float(center[1])
+        cone.color = 'unknown'
+        cone.confidence = float(confidences[key]['C_lidar'])
+        msg.cones.append(cone)
+    publisher_cones.publish(msg)
+
+
+def clustering(msg):
+    started = getattr(time, 'monotonic', time.time)()
+    try:
+        _clustering_frame(msg)
+    finally:
+        elapsed = getattr(time, 'monotonic', time.time)() - started
+        rospy.loginfo_throttle(1.0, 'Lidar clustering processing=%.1f ms', elapsed * 1000.0)
+        if elapsed > processing_warn_seconds:
+            rospy.logwarn_throttle(1.0, 'Lidar clustering exceeds budget: %.1f ms', elapsed * 1000.0)
+
+
 if __name__ == '__main__':
-
-    rospy.init_node(
-        'clustering'
-    )
-
-    subscriber_obstacle_cloud = \
-        rospy.Subscriber(
-            "/ground_segmentation/obstacle_cloud",
-            PointCloud2,
-            clustering
-        )
-
-    publisher_rviz_markers = \
-        rospy.Publisher(
-            'visualization_marker_array',
-            MarkerArray,
-            queue_size=1
-        )
-
-    publisher_perception = \
-        rospy.Publisher(
-            "clustered_points",
-            PoseArray,
-            queue_size=1
-        )
-
+    rospy.init_node('clustering')
+    epsilon_min = float(rospy.get_param('~epsilon_min', 0.08))
+    epsilon_max = float(rospy.get_param('~epsilon_max', 0.25))
+    if not (np.isfinite(epsilon_min) and np.isfinite(epsilon_max) and
+            0 < epsilon_min <= epsilon_max):
+        raise ValueError('Invalid clustering radii')
+    cluster_limits = dict(min_points=rospy.get_param('~cone_min_points', 5),
+                          max_height=rospy.get_param('~cone_max_height', 0.60),
+                          max_radius=rospy.get_param('~cone_max_radius', 0.30),
+                          max_distance=rospy.get_param('~cone_max_distance', 5.0),
+                          min_confidence=rospy.get_param('~cone_min_confidence', 0.25))
+    if (not all(np.isfinite(v) for v in cluster_limits.values()) or
+            cluster_limits['min_points'] < 1 or
+            min(cluster_limits[k] for k in ('max_height', 'max_radius', 'max_distance')) <= 0 or
+            not 0.0 <= cluster_limits['min_confidence'] <= 1.0):
+        raise ValueError('Invalid cone screening parameters')
+    D_MAX = cluster_limits['max_distance']
+    processing_warn_seconds = float(rospy.get_param('~processing_warn_seconds', 0.10))
+    if not np.isfinite(processing_warn_seconds) or processing_warn_seconds <= 0:
+        raise ValueError('Invalid processing budget')
+    publisher_rviz_markers = rospy.Publisher('visualization_marker_array', MarkerArray, queue_size=1)
+    publisher_perception = rospy.Publisher('/clustered_points', PoseArray, queue_size=1)
+    publisher_cones = rospy.Publisher('/lidar/cones', ConeArray, queue_size=1)
+    subscriber_obstacle_cloud = rospy.Subscriber('/ground_segmentation/obstacle_cloud',
+                                                PointCloud2, clustering, queue_size=1)
     rospy.spin()
