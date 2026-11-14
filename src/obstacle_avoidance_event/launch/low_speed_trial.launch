@@ -1,0 +1,31 @@
+<launch>
+  <arg name="output_mode" default="disabled"/>
+  <arg name="operator_ack" default=""/>
+  <arg name="external_speed_limited" default="false"/>
+  <arg name="can_dest_ip" default="127.0.0.1"/>
+  <arg name="can_dest_port" default="20005"/>
+  <arg name="can_self_port" default="11312"/>
+  <node pkg="acceleration_event" type="jiantu.py" name="trackdrive_input_mapper" output="screen">
+    <param name="enable_visualization" value="false"/>
+    <param name="lidar_offset_x" value="1.76618"/>
+    <param name="lidar_offset_y" value="-0.11304"/>
+    <param name="lidar_offset_z" value="0.42850"/>
+    <param name="lidar_y_sign" value="-1"/>
+    <param name="lidar_yaw_offset_deg" value="0.5"/>
+  </node>
+  <node pkg="obstacle_avoidance_event" type="planning_shadow_node.py" name="trackdrive_planning_shadow" output="screen">
+    <rosparam command="load" file="$(find obstacle_avoidance_event)/config/low_speed_trial.yaml"/>
+  </node>
+  <node pkg="obstacle_avoidance_event" type="low_speed_output_node.py" name="trackdrive_low_speed_output" output="screen">
+    <param name="output_mode" value="$(arg output_mode)"/>
+    <param name="operator_ack" value="$(arg operator_ack)"/>
+    <param name="external_speed_limited" value="$(arg external_speed_limited)"/>
+    <param name="can_dest_ip" value="$(arg can_dest_ip)"/>
+    <param name="can_dest_port" value="$(arg can_dest_port)"/>
+    <param name="can_self_port" value="$(arg can_self_port)"/>
+    <param name="candidate_timeout" value="0.5"/>
+    <!-- User-authorized continuous trial: zero disables only these two limits. -->
+    <param name="test_distance" value="0.0"/>
+    <param name="test_duration" value="0.0"/>
+  </node>
+</launch>

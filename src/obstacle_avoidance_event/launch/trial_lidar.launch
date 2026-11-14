@@ -1,0 +1,10 @@
+<launch>
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
+  <node pkg="obstacle_avoidance_event" type="trial_prefilter.py" name="trackdrive_prefilter" output="screen"/>
+  <include file="$(find linefit_ground_segmentation_ros)/launch/segmentation.launch"/>
+  <node pkg="lidar_nodes" type="clustering.py" name="clustering" output="screen">
+    <param name="self_filter_rear" value="1.2"/>
+    <param name="self_filter_front" value="1.8"/>
+    <param name="self_filter_half_width" value="0.9"/>
+  </node>
+</launch>

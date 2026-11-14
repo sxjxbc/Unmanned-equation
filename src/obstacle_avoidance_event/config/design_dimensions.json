@@ -1,0 +1,43 @@
+{
+  "profile": "A33_design_dimensions_offline_only",
+  "source_sheet": "设计参数表FSEC",
+  "source_cells": {
+    "length": "D11",
+    "width": "F11",
+    "wheelbase": "D12"
+  },
+  "length": 2.93,
+  "width": 1.4,
+  "wheelbase": 1.55,
+  "front_overhang": null,
+  "rear_overhang": null,
+  "localization_offset": null,
+  "measured_max_steer": null,
+  "vehicle_output": false,
+  "imu_body_assumption": {
+    "reference": "imu",
+    "axes": "x_forward_y_left_z_up",
+    "front_extent_m": 1.76618,
+    "rear_extent_m": 1.16382,
+    "width_m": 1.4,
+    "assumption": "lidar_measurement_center_at_frontmost_longitudinal_position; IMU inside body",
+    "user_authorized": true,
+    "imu_lateral_offset_m": null,
+    "lateral_envelope_half_width_m": 1.4
+  },
+  "lidar_translation_in_imu_m": [
+    1.76618,
+    -0.11304,
+    0.4285
+  ],
+  "lidar_rotation_in_imu": null,
+  "localization_reference": "imu_center",
+  "imu_to_rear_axle_m": [-0.463, 0.010],
+  "imu_to_rear_axle_measurement": {
+    "source": "user_report_2026-11-02",
+    "axes": "x_forward_y_left",
+    "direction_interpretation": "rear_axle_midpoint_behind_IMU_463mm_and_left_about_10mm_per_preceding_question",
+    "lateral_approximate": true,
+    "uncertainty_m": null
+  }
+}

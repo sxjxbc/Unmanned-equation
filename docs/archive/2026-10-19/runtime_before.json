@@ -1,0 +1,474 @@
+[
+  {
+    "path": "src/CMakeLists.txt",
+    "sha256": "4D98821D52B02264FE9F22DB7CA30F992B36F98F43747DDE2056D4142957E08F"
+  },
+  {
+    "path": "src/acceleration_event/CMakeLists.txt",
+    "sha256": "2B0C199737AF316F089EF864AB100B09F40AA10F2123F0099ECB3B43C411B1E6"
+  },
+  {
+    "path": "src/acceleration_event/package.xml",
+    "sha256": "86E64EE3D595C0D5CC3F55DC91D793BB20A463B462FE08881706D3A2C5FF81E6"
+  },
+  {
+    "path": "src/acceleration_event/launch/acceleration_event.launch",
+    "sha256": "C1243FB035134F17981DD2DAD1210D44057A8C1B45FAEAFE9EE57A03E49027FE"
+  },
+  {
+    "path": "src/acceleration_event/launch/acceleration_lidar.launch",
+    "sha256": "66D2905F98F54ADECAFA9BCDE1ED760A8D38ED5A077401EA4380ABEBA34CFE0D"
+  },
+  {
+    "path": "src/acceleration_event/launch/live_mapping_check.launch",
+    "sha256": "713A6CE6335971B16549825DAFF5F49532FBED1A820C4C5BEE1FBBB73D540881"
+  },
+  {
+    "path": "src/acceleration_event/launch/run_diagnostics.launch",
+    "sha256": "BA9ABCB3E6F88D05E862100C6D39157493EA8F01F1EB1B2EC269B2419390FF8B"
+  },
+  {
+    "path": "src/acceleration_event/launch/validation.launch",
+    "sha256": "4DD9424415EA5CEFE4A0C286592C9E7EA0F0255D3DA798969577F2FFB6B23B7B"
+  },
+  {
+    "path": "src/acceleration_event/scripts/analyze_loop_response.py",
+    "sha256": "44908335B9B1DEBB7F46C971DC40C554569415AE6491410E4ACC0443EA994E8B"
+  },
+  {
+    "path": "src/acceleration_event/scripts/build_validation_workspace.sh",
+    "sha256": "380944BB37D8DDB95E1AEAE57A17F6761D24E1EBE74344832F9F316A1AAC4B0A"
+  },
+  {
+    "path": "src/acceleration_event/scripts/check_original_environment.sh",
+    "sha256": "1E21BC075E182E997C8764C47FCCA7ADB8FD3405104ECEC279339BB78FFE5BCF"
+  },
+  {
+    "path": "src/acceleration_event/scripts/legacy_loop_validation.py",
+    "sha256": "8555BCA9203E995CAFD1EFFC8B53DB8E0E5D8FCC2DCB119ECE8112157A443E03"
+  },
+  {
+    "path": "src/acceleration_event/scripts/prepare_linux_sources.py",
+    "sha256": "AA7000545D9C98C52B8B3628C180616C2E5D44573DE3F0160C5222AAE0F4D098"
+  },
+  {
+    "path": "src/acceleration_event/scripts/ros_fault_validation.py",
+    "sha256": "43ECF71EFEA6982AE773B1AFEDB2881AD349A24F253C0947047B9D4D8DAC922F"
+  },
+  {
+    "path": "src/acceleration_event/scripts/smoke_ros_validation.py",
+    "sha256": "D0DEEA7C593A38126ED6968995AD2D9D24719E8C27B1EBE54694FAFB8C4EC44B"
+  },
+  {
+    "path": "src/acceleration_event/scripts/validate_track_frame.py",
+    "sha256": "27D781CC7E5D8A576673BA72E9F86AE4FCC5293BD1A1CA293A0928F0D0FBCF3B"
+  },
+  {
+    "path": "src/acceleration_event/scripts/validation_inputs.py",
+    "sha256": "CEDFBCE16BA5CC63F07B1B4286A28685A2B190B35EAEAB13B831882CA7E295CF"
+  },
+  {
+    "path": "src/acceleration_event/src/data_quality.py",
+    "sha256": "525F8594A2512496F6B97EAEB619FD05817DE2C9EA34F12A8E70BAF12A80E272"
+  },
+  {
+    "path": "src/acceleration_event/src/genzong_lidar.py",
+    "sha256": "823FCA4C743D9049CDDD8FE125CBD50F628B73492CB6F7A8A25439C3BF658509"
+  },
+  {
+    "path": "src/acceleration_event/src/genzong_realtime.py",
+    "sha256": "7F2D325581356AED85AF48CCA570319EEF616692625C194994A4FE9456583C1F"
+  },
+  {
+    "path": "src/acceleration_event/src/jiantu.py",
+    "sha256": "3A8A8A67FE7AB15AEDB0532F998BA331FA558C696961ACBE58731357D077EA89"
+  },
+  {
+    "path": "src/acceleration_event/src/legacy_run_guard.py",
+    "sha256": "E3530CBA8CAC7025612FE87060F576C036B4129F34C728EA4A9F30CDA764ABCA"
+  },
+  {
+    "path": "src/acceleration_event/src/lidar_road.py",
+    "sha256": "A6210924145D06705BCE67EB5989D59E03D224F18F98F4D9BF24B404D2B53DDB"
+  },
+  {
+    "path": "src/acceleration_event/src/run_diagnostics_core.py",
+    "sha256": "FFBE1077184D025714787D2A42331674B80F8A29A7E2F5D03396D0FC12177341"
+  },
+  {
+    "path": "src/acceleration_event/src/run_diagnostics.py",
+    "sha256": "4B4FA59370C855AC69B5C610599C8E943384EFBA0A0E5B25E8DF9F2856651AF1"
+  },
+  {
+    "path": "src/acceleration_event/src/track_frame.py",
+    "sha256": "28736229EDD604A8EE47F56AD2429E1EB2F0632CB7AB91CD126888BCBEEF5569"
+  },
+  {
+    "path": "src/acceleration_event/src/zhixian_realtime (copy).py",
+    "sha256": "8CB38D9CDF19D5F553926129F5FEEC4AF2A4B5CA3EC4F2AAA33B7F2F2FF52A47"
+  },
+  {
+    "path": "src/acceleration_event/src/zhixian_realtime.py",
+    "sha256": "2BF41DF12B2CDC575FA7A24D3638BE8AAB5511EFD5A65FD890F25B6D311C0D34"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_buffer_python2.py",
+    "sha256": "B5CAD5E3D452EC498C419E0B4FE1029EBF8F444AFA098390373BC396258DC1F8"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_centerline_geometry.py",
+    "sha256": "792E3C700D910C5BC7BF6B1A415E3408EE07F0B8AE0AC0B010BBC991C35F60BB"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_complete_legacy_loop.py",
+    "sha256": "F568E69EBEF9CFFA349D1E15554A4A0EFF7EFC0059C96A0FFAB8AF4FD81CE7CF"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_data_quality.py",
+    "sha256": "5ABD5575A03C2B44D4A0628B6F5601D55F94B7834AA11A183F08E2E4003D1727"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_finish_progress.py",
+    "sha256": "1EA91F42B25512BA9CCE3EE01BBFC450109766D8830CF119FAF651D2A5847418"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_legacy_run_guard.py",
+    "sha256": "2579ECB2F23EA90853E6E577D80CB0B6B0F647E90A287AFD8522D616FA434772"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_lidar_contract.py",
+    "sha256": "4B1B2E224595BC90DF9961462FBDB49C31F2F59BB6124371066D7EDBEB0F879C"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_lidar_fusion_node.py",
+    "sha256": "BED9BE94233BCBD7161B22C6C320F75710A8190669FB6275B774EB27E64A163A"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_lidar_fusion.py",
+    "sha256": "592D6F8693EC479512F59969E15DA5D91190D3C97048BD618C8B289A9FDF0EE4"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_localization_mapping.py",
+    "sha256": "607D93363CFC38FBA0718B19F9881888541FB0C62DBBC1BC7499AF245600E81F"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_run_diagnostics.py",
+    "sha256": "B21AD536D280CC76D14A478BC5986BF05EC85B7B6EAD417DC552688D2299592F"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_startup_outputs.py",
+    "sha256": "1A72F77B6AD87000095595CAFE67976BB7045FEBF0611E5FD007DC6FFC6CA46D"
+  },
+  {
+    "path": "src/acceleration_event/tests/test_track_frame_nodes.py",
+    "sha256": "6B2790F401FA581525D6FCCC4FDCDABD34E5463B821E5D294EC07D3A563E54C2"
+  },
+  {
+    "path": "src/figure_eight_planner/CMakeLists.txt",
+    "sha256": "1619AB30EEB65BF787737E0334888BF7F7172BDAA3E30BD47BE917AA3A0D07BD"
+  },
+  {
+    "path": "src/figure_eight_planner/package.xml",
+    "sha256": "58D8FBB9841546FD1DE9F950E04CBA23A1FFECAE67542A8DA51BB1B220D1B02B"
+  },
+  {
+    "path": "src/figure_eight_planner/config/jiantu_params.yaml",
+    "sha256": "C349EB0A3F514EFC76493C17A8B85179DA865BA6AD3048CBD0AA43AB9EA1BE77"
+  },
+  {
+    "path": "src/figure_eight_planner/config/planner_params.yaml",
+    "sha256": "129E76CC1DE9A522ABB6232F9D8B2CADA13BF7D887D91CA754CFFFF9D1DDCD1B"
+  },
+  {
+    "path": "src/figure_eight_planner/config/radar_params.yaml",
+    "sha256": "D6DB21D7A19E1D3A8EE539C411C8E1E77F0E04DC22CDBBD102D668B1087A72C6"
+  },
+  {
+    "path": "src/figure_eight_planner/config/tracking_params.yaml",
+    "sha256": "8640616510888F61AED3F7EA0FE1B30E856FF857A9AADDC001E44849BC32374E"
+  },
+  {
+    "path": "src/figure_eight_planner/config/vcu_params.yaml",
+    "sha256": "EE3EA7973DBFBA5336A7BED8184109633BC130EF6F7CE0D541B06170A1D34ECE"
+  },
+  {
+    "path": "src/figure_eight_planner/launch/bazi_realtime.launch",
+    "sha256": "A7BF97909EFA2EE5CF6A192EC37938DAB8219F709E61F1060284A4F48DF0D661"
+  },
+  {
+    "path": "src/figure_eight_planner/launch/bazi_sim.launch",
+    "sha256": "48BE8A90A625893AB86A2A6B18EFAA6D473F96736D961D49CA3EEDE9F95B487B"
+  },
+  {
+    "path": "src/figure_eight_planner/scripts/bazi_planner_bazi_v4.2.py",
+    "sha256": "D37BB9659F0D491C3E494BA6B6B94A4EDC5FE2A318F24F3EB341A142CECE9EE2"
+  },
+  {
+    "path": "src/figure_eight_planner/scripts/bazi_radar_simulator.py",
+    "sha256": "469CE1665CD895FF1C3C9AC56664D27EFF3CFFED6E506259252788133EF358CF"
+  },
+  {
+    "path": "src/figure_eight_planner/scripts/jiantu_lidar1.0.3.py",
+    "sha256": "B27B3324E514D673242BB432278EA409456B570AE06722EC4D28D39226540174"
+  },
+  {
+    "path": "src/figure_eight_planner/scripts/tracking_udp_v1.2.py",
+    "sha256": "76DA85E6680BE39047913FED5FDB610F34E3D6088584E3B6AA56EBCD161BA723"
+  },
+  {
+    "path": "src/figure_eight_planner/scripts/virtual_vcu_udp3.0.4.py",
+    "sha256": "54F3E0E6A6DD90419C9BE4AB0D3068CA443A32C8D3ACE1BD3D5015E76B04AEEB"
+  },
+  {
+    "path": "src/imu/CMakeLists.txt",
+    "sha256": "471819D27AE0CF6084347B8917733202DE83910CE99A63856CC7E9DE3D80C61A"
+  },
+  {
+    "path": "src/imu/package.xml",
+    "sha256": "F9C30123A0E849947B721CB74E188B172928AEA3C2820714521379F1750E3372"
+  },
+  {
+    "path": "src/imu/src/daoyuan_simple.py",
+    "sha256": "0BC65159626A0901B1CCACE86DB99645A8E439A93E5F8848BC2456B4786353ED"
+  },
+  {
+    "path": "src/lidar/.catkin_tools/profiles/default/build.yaml",
+    "sha256": "93188E18AA1D755E8FCE4D5BCAA2FF8479EE5080EE79C1F81CB9C371B27356ED"
+  },
+  {
+    "path": "src/lidar/.catkin_tools/profiles/default/config.yaml",
+    "sha256": "93188E18AA1D755E8FCE4D5BCAA2FF8479EE5080EE79C1F81CB9C371B27356ED"
+  },
+  {
+    "path": "src/lidar/build/atomic_configure/_setup_util.py",
+    "sha256": "63FFCA2B537A2D7C428718B50B2E4C7806E4DD15CC894F6D877E939CEB7D728D"
+  },
+  {
+    "path": "src/lidar/build/atomic_configure/env.sh",
+    "sha256": "0F26A769A4F335D1B41C990508FC8E5A801F7B75833285CFC6188AC54DE24EE4"
+  },
+  {
+    "path": "src/lidar/build/atomic_configure/local_setup.sh",
+    "sha256": "FD9CFBEF1782C20A5CDA6BC27AFD29E44BC4FFAE7F7C3175336E84F4520E6131"
+  },
+  {
+    "path": "src/lidar/build/atomic_configure/setup.sh",
+    "sha256": "BE00F0261BE1A5C4FE467909DB5EF4FD0FB20C49C613B234633C08BE93E948CA"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/env_cached.sh",
+    "sha256": "F67279CF19914ED417AA36C54A85B5D4E73548E0F37C19B8D03CE939481203BA"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/generate_cached_setup.py",
+    "sha256": "B6A490D75DA6D7D0F5FF276AFB2B33B735A1361D9AE04C559BE310A88273C0F9"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/order_packages.py",
+    "sha256": "53A1308448BA80D474ECBCFD75A88DA0BAFF8FE637FA0ED6FF3682706D4E2505"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/setup_cached.sh",
+    "sha256": "16AA7D76E18632D285A9641A05F3DA9D94D0F104F04769C2FF5A1B80B2E4C759"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/installspace/_setup_util.py",
+    "sha256": "63FFCA2B537A2D7C428718B50B2E4C7806E4DD15CC894F6D877E939CEB7D728D"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/installspace/env.sh",
+    "sha256": "0F26A769A4F335D1B41C990508FC8E5A801F7B75833285CFC6188AC54DE24EE4"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/installspace/local_setup.sh",
+    "sha256": "2DB4C36DB056AF3913D5775A2F89DE4F5D2CA1247337434939032352EA6B8564"
+  },
+  {
+    "path": "src/lidar/build/catkin_generated/installspace/setup.sh",
+    "sha256": "97548BFD3675DD769DA3294DEE246FDCD5C9DA92AEA358F73E0BC479290C3BA4"
+  },
+  {
+    "path": "src/lidar/build/catkin_simple/catkin_generated/catkin_simple-extras.cmake.develspace.context.cmake.py",
+    "sha256": "9F501EE2C2DF0FDC80B8AB4FBBB024EE914A0A269E8152F73127D2B77D9240B9"
+  },
+  {
+    "path": "src/lidar/build/catkin_simple/catkin_generated/catkin_simple-extras.cmake.installspace.context.cmake.py",
+    "sha256": "17BCFE57A8396CE1B8F4C5065874CF927A5A2C4A2270243EDC1AE4181C9D62CA"
+  },
+  {
+    "path": "src/lidar/build/catkin_simple/catkin_generated/pkg.develspace.context.pc.py",
+    "sha256": "00DAB5754A6D84580F231733CFB5E3BA0499F8F8013DE1569EE7E590E60F5BF1"
+  },
+  {
+    "path": "src/lidar/build/catkin_simple/catkin_generated/pkg.installspace.context.pc.py",
+    "sha256": "F6C4DF057B3AE20F0D480E7F8E0730482C9888BA41808BAFD6DB24DC1A838CDF"
+  },
+  {
+    "path": "src/lidar/build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+    "sha256": "421A735A18064B142332B330153F7438719E27611A38FED8FBD5238081F42199"
+  },
+  {
+    "path": "src/lidar/build/glog_catkin/catkin_generated/pkg.develspace.context.pc.py",
+    "sha256": "A3B30F4738B26C50D1445ACAEA7735E0234501650FAA5DF683A0D4D0B4C1401A"
+  },
+  {
+    "path": "src/lidar/build/glog_catkin/catkin_generated/pkg.installspace.context.pc.py",
+    "sha256": "BBA352DF6D91A90054067C72D6DB840D1668EA9E9CCBF3C0CA5AF21C1FD00F89"
+  },
+  {
+    "path": "src/lidar/build/lidar_nodes/catkin_generated/pkg.develspace.context.pc.py",
+    "sha256": "FD6F40D25FC5EEB4B26257251E95FE3ADC234B1DC27B5AFFA61CC2D21B6FFB3F"
+  },
+  {
+    "path": "src/lidar/build/lidar_nodes/catkin_generated/pkg.installspace.context.pc.py",
+    "sha256": "85A65AAB1F88C4D57794C1DE89502BEAF6DB079347C43DC6AD1D0086B237C4D4"
+  },
+  {
+    "path": "src/lidar/build/linefit_ground_segmentation/linefit_ground_segmentation/catkin_generated/pkg.develspace.context.pc.py",
+    "sha256": "EBA2156765873454695DEBF20CB83544A83549760A8C23182BA7DF57ADCFC3FF"
+  },
+  {
+    "path": "src/lidar/build/linefit_ground_segmentation/linefit_ground_segmentation/catkin_generated/pkg.installspace.context.pc.py",
+    "sha256": "5BB6C1C07F2956B208ED77A23465AF550D6B31DF89953BE883F07577B1EF1009"
+  },
+  {
+    "path": "src/lidar/build/linefit_ground_segmentation/linefit_ground_segmentation_ros/catkin_generated/pkg.develspace.context.pc.py",
+    "sha256": "A86999B3D6827BBF4FF03F656A788A4B5A870B2F76BE37F1F7301882E055D4E9"
+  },
+  {
+    "path": "src/lidar/build/linefit_ground_segmentation/linefit_ground_segmentation_ros/catkin_generated/pkg.installspace.context.pc.py",
+    "sha256": "BECA5D147B7C6733FCD876A588995CE6F28542735AA0216061CD7295CC376C72"
+  },
+  {
+    "path": "src/lidar/devel/_setup_util.py",
+    "sha256": "63FFCA2B537A2D7C428718B50B2E4C7806E4DD15CC894F6D877E939CEB7D728D"
+  },
+  {
+    "path": "src/lidar/devel/env.sh",
+    "sha256": "0F26A769A4F335D1B41C990508FC8E5A801F7B75833285CFC6188AC54DE24EE4"
+  },
+  {
+    "path": "src/lidar/devel/local_setup.sh",
+    "sha256": "FD9CFBEF1782C20A5CDA6BC27AFD29E44BC4FFAE7F7C3175336E84F4520E6131"
+  },
+  {
+    "path": "src/lidar/devel/setup.sh",
+    "sha256": "BE00F0261BE1A5C4FE467909DB5EF4FD0FB20C49C613B234633C08BE93E948CA"
+  },
+  {
+    "path": "src/lidar/src/CMakeLists.txt",
+    "sha256": "4D98821D52B02264FE9F22DB7CA30F992B36F98F43747DDE2056D4142957E08F"
+  },
+  {
+    "path": "src/lidar/src/catkin_simple/CMakeLists.txt",
+    "sha256": "B0952D746504E27F1E1A3A6A5EA4C8A12B5AB305F1A92E68D864F46A74C701A1"
+  },
+  {
+    "path": "src/lidar/src/catkin_simple/package.xml",
+    "sha256": "1D43D640EF6CEDB496539F3A9C51879BD02DE71AB62BD2A5B678FF09C80A93D5"
+  },
+  {
+    "path": "src/lidar/src/glog_catkin/CMakeLists.txt",
+    "sha256": "C67E6A3A4ED5E389080CC5D87E67BE0985B909EE65FA7859A8D81FC84C98468E"
+  },
+  {
+    "path": "src/lidar/src/glog_catkin/package.xml",
+    "sha256": "1CD88D514CFFB6789ED0FC36F3C5CC2C84300A6DF8BDE7B129A32F86479518F2"
+  },
+  {
+    "path": "src/lidar/src/lidar_nodes/CMakeLists.txt",
+    "sha256": "66756DBCE21CEFD98F4717B026403B06EC43DCC9311C5BC861B8CFE67A4C4FDE"
+  },
+  {
+    "path": "src/lidar/src/lidar_nodes/package.xml",
+    "sha256": "1172E1831BE64A2C389DD1E982D70625AA516AA18DDB6233FAD20A4772258285"
+  },
+  {
+    "path": "src/lidar/src/lidar_nodes/launch/lidar.launch",
+    "sha256": "CE403E76B15701D9923109BFA147A1FC380EAF277400AFCD01D3E406CE83DBD2"
+  },
+  {
+    "path": "src/lidar/src/lidar_nodes/src/clustering.py",
+    "sha256": "83AAA90776A4B21425B7F37F9ABBF1519F7F33E71C6FDE06AB28551912D90F64"
+  },
+  {
+    "path": "src/lidar/src/lidar_nodes/src/input_and_prefilter.py",
+    "sha256": "5B0E04C8381E2CF9E4502B91DE9D189FD235932E55076FD82EEAE26F717E8674"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation/CMakeLists.txt",
+    "sha256": "5448A42DE72FA47AEB7D5F1E599E258C8CF620A142D33059A3D091B5A93A5081"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation/package.xml",
+    "sha256": "ED10FC68C358DC01A163A912DA4A36AB055308622A1BABE0D30F5DB682FE5412"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation/include/ground_segmentation/bin.h",
+    "sha256": "B3767BC22CCFB913927B18834F96ED1341CE25EE0E3C975D39F22A8B0A905A62"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation/include/ground_segmentation/ground_segmentation.h",
+    "sha256": "34C58D9AED6E2FDA88336B52F8976DA88C75EF42656A33D928F76F23ACB6761E"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation/include/ground_segmentation/segment.h",
+    "sha256": "5CA676D6558CFF6895EDE80912D258D05308A1BB0F0677DB6C15D7980152F677"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation_ros/CMakeLists.txt",
+    "sha256": "23E8379A7F6B445CB96DB8F0E4D15497F2024353579DC4EEE8609F561CFDBEF9"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation_ros/package.xml",
+    "sha256": "2E60F0ED5FE915CD740C26AF72CF214590BCC654DC3E7C128F0CDF2EF8862C32"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation_ros/launch/segmentation_params.yaml",
+    "sha256": "444B9FBB1A80A4CFD1AA866F0E14CD25E5C7E414D6A9BEBFDC82387F9F63A82A"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation_ros/launch/segmentation.launch",
+    "sha256": "85107E6F24F736D10257449EF3BFAEAFA5160D1CE84755729C3B23E2830CCBD5"
+  },
+  {
+    "path": "src/lidar/src/linefit_ground_segmentation/linefit_ground_segmentation_ros/launch/test.launch",
+    "sha256": "0F518FDC9947B68C24A83CE3ABBA507F71758CA23F8BC6647538F1F70BFBA080"
+  },
+  {
+    "path": "src/mapping/CMakeLists.txt",
+    "sha256": "6EEE8B7011B00CDFF3F4D78A511083CB08E4B9F341CFF77292D6C167E381DC36"
+  },
+  {
+    "path": "src/mapping/package.xml",
+    "sha256": "0EEF9C5186EF24017FF2D303969682BD4A88BF5E99337B25152ABC9ECEEF078F"
+  },
+  {
+    "path": "src/mapping/src/fake_perception.py",
+    "sha256": "7B23D3770CF6F06F2DC2BD25D5A683B4AAD1829CCD7229D786DCDB4A6C147212"
+  },
+  {
+    "path": "src/mapping/src/jiantu.py",
+    "sha256": "8F3BE6F23D11E38D202FC8C2EF43B52DF7102EF24F072A2C78223F950D61AAB7"
+  },
+  {
+    "path": "src/mapping/src/ros_python3_wrapper.py",
+    "sha256": "CD5C12C8F034DBC0D612878D9926D2FCD1086D5817651645B170D302729947EA"
+  },
+  {
+    "path": "src/mapping/src/run_jiantu_python3.py",
+    "sha256": "737B820C7E26952E0AF8B29013CD304328B695B9A1F82E0ADBF23873435B0B96"
+  },
+  {
+    "path": "src/mapping/src/test_fake_perception.py",
+    "sha256": "908B1CB7AFDECE4973AE192D2FC110B7736FEA3F127F12794FC027FBF01FB44A"
+  },
+  {
+    "path": "tests/test_lidar_sector.py",
+    "sha256": "928D417FD080D7DC8DC47E53F59BDCE31E61C3F21D623A45F709B5C042B19F0E"
+  },
+  {
+    "path": "start_mapping.sh",
+    "sha256": "643928192A4CFCFC89480A139CF6256CDA9B3476235496462AE6445E65847628"
+  }
+]

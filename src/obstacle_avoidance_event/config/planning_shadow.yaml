@@ -1,0 +1,19 @@
+# User confirmed IMU center reference and rear offset; remaining fields stay unconfirmed.
+vehicle_output: false
+control_mode: legacy_compatible
+# execution_steering_sign intentionally omitted until coordinate/sign review.
+boundary_mode: inferred_shadow
+coordinates:
+  localization_reference: confirmed_imu
+  convention_confirmed: false
+  # User report: rear axle behind 463mm, left about 10mm; x-forward/y-left.
+  rear_in_imu: [-0.463, 0.010]
+  input_map_frame: map
+  map_frame: trackdrive_map
+  cones_frame: /velodyne
+  lidar_offset_x: 1.76618
+  lidar_offset_y: -0.11304
+  lidar_y_sign: -1
+  lidar_yaw_offset_deg: 0.5
+# No assumed real geometry or braking calibration is loaded automatically.
+# vehicle intentionally omitted until a complete profile is available.

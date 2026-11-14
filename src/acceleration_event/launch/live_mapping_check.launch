@@ -1,0 +1,15 @@
+<launch>
+  <!-- Output disabled. Hardware sensors require explicit opt-in. -->
+  <arg name="start_sensors" default="false"/>
+  <arg name="log_dir" default="/tmp/path_tracking_logs"/>
+  <param name="use_sim_time" value="false"/>
+  <group if="$(arg start_sensors)">
+    <node pkg="imu" type="daoyuan_simple.py" name="mapping_serial_port" output="screen" required="true"/>
+    <include file="$(find lidar_nodes)/launch/lidar.launch"/>
+  </group>
+  <include file="$(find acceleration_event)/launch/acceleration_event.launch">
+    <arg name="enable_vehicle_output" value="false"/>
+    <arg name="enable_visualization" value="false"/>
+    <arg name="log_dir" value="$(arg log_dir)"/>
+  </include>
+</launch>

@@ -1,0 +1,5 @@
+# No real vehicle dimensions are assumed. Candidate outputs only.
+vehicle_output: false
+control_mode: legacy_compatible
+cones_topic: /clustered_points
+pose_topic: /vehicle_pose

@@ -1,0 +1,82 @@
+<launch>
+  <!-- Existing vehicle values are copied verbatim from acceleration_event.launch. -->
+  <arg name="tracking_mode" default="shadow"/>
+  <arg name="enable_vehicle_output" default="false"/>
+  <arg name="start_mapping" default="true"/>
+  <arg name="log_dir" default="/tmp/path_tracking_logs"/>
+  <arg name="can_dest_ip" default="192.168.0.7"/>
+  <arg name="can_dest_port" default="20005"/>
+  <arg name="can_self_port" default="11312"/>
+
+  <!-- 1. 建图节点 jiantu.py -->
+  <node pkg="acceleration_event" type="jiantu.py" name="fsae_slam_node" output="screen" if="$(arg start_mapping)">
+    <param name="imu_init_wait_time" value="3.0"/>
+    <param name="gps_lat_min" value="30.0"/>
+    <param name="gps_lat_max" value="40.0"/>
+    <param name="gps_lon_min" value="110.0"/>
+    <param name="gps_lon_max" value="125.0"/>
+
+    <param name="lidar_offset_x" value="1.76618"/>
+    <param name="lidar_offset_y" value="-0.11304"/>
+    <param name="lidar_offset_z" value="0.42850"/>
+    <param name="lidar_y_sign" value="-1.0"/>
+    <param name="lidar_yaw_offset_deg" value="0.5"/>
+
+    <param name="cone_merge_distance" value="0.8"/>
+    <param name="cone_timeout" value="6.0"/>
+  </node>
+
+<!-- Current-frame LiDAR controller, reusing the original PD and CAN. -->
+  <node pkg="acceleration_event" type="genzong_lidar.py" name="lidar_tracking_controller" output="screen">
+    <param name="tracking_mode" value="$(arg tracking_mode)"/>
+    <param name="enable_vehicle_output" value="$(arg enable_vehicle_output)"/>
+    <param name="lidar_offset_x" value="1.76618"/>
+    <param name="lidar_offset_y" value="-0.11304"/>
+    <param name="lidar_offset_z" value="0.42850"/>
+    <param name="lidar_y_sign" value="-1.0"/>
+    <param name="lidar_yaw_offset_deg" value="0.5"/>
+    <param name="track_width" value="3.0"/>
+    <param name="cone_confidence_threshold" value="0.25"/>
+    <param name="max_vehicle_speed_mps" value="4.1667"/>
+    <param name="max_steering" value="0.28"/>
+    <param name="finish_distance" value="75.0"/>
+    <param name="steering_sign" value="1.0"/>
+    <param name="max_steering_step" value="0.012"/>
+    <param name="fixed_speed" value="4.1667"/>
+
+    <param name="kp_lateral" value="0.48"/>
+    <param name="kd_lateral" value="0.05"/>
+    <param name="kp_heading" value="0.10"/>
+    <param name="kd_heading" value="0.01"/>
+    <param name="error_filter_alpha" value="0.12"/>
+
+    <param name="heading_weight_min" value="0.35"/>
+    <param name="heading_weight_full_lateral_error" value="0.80"/>
+    <param name="max_lateral_derivative" value="0.60"/>
+    <param name="max_heading_derivative" value="0.35"/>
+
+    <param name="lookahead_min" value="2.5"/>
+    <param name="lookahead_max" value="4.0"/>
+    <param name="lookahead_speed_gain" value="0.35"/>
+
+    <param name="local_cone_min_x" value="0.5"/>
+    <param name="local_cone_max_x" value="18.0"/>
+    <param name="local_cone_max_abs_y" value="4.0"/>
+    <param name="max_local_cones" value="4"/>
+    <param name="pair_distance_min" value="2.0"/>
+    <param name="pair_distance_max" value="4.0"/>
+    <param name="pair_max_dx" value="2.5"/>
+    <param name="local_max_slope" value="0.30"/>
+    <param name="local_timeout" value="0.35"/>
+    <param name="local_blend_two_pairs" value="0.65"/>
+    <param name="local_blend_one_pair" value="0.45"/>
+
+    <param name="log_dir" value="$(arg log_dir)"/>
+    <param name="can_dest_ip" value="$(arg can_dest_ip)"/>
+    <param name="can_dest_port" value="$(arg can_dest_port)"/>
+    <param name="can_self_port" value="$(arg can_self_port)"/>
+    <param name="max_steering" value="0.50"/>
+    <param name="kp_lateral" value="0.60"/>
+    <param name="kp_heading" value="0.20"/>
+  </node>
+</launch>

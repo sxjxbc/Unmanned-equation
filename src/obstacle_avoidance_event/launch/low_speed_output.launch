@@ -1,0 +1,10 @@
+<launch>
+  <!-- Deliberately disabled. This launch is NOT included by autostart. -->
+  <node pkg="obstacle_avoidance_event" type="low_speed_output_node.py" name="trackdrive_low_speed_output" output="screen">
+    <param name="output_mode" value="disabled"/>
+    <param name="candidate_timeout" value="0.5"/>
+    <param name="max_estimated_speed" value="1.0"/>
+    <param name="test_distance" value="3.0"/>
+    <param name="test_duration" value="15.0"/>
+  </node>
+</launch>

@@ -1,0 +1,31 @@
+#!/bin/bash
+source /opt/ros/melodic/setup.bash
+
+
+
+# 1. 先杀死所有ROS相关进程
+killall -9 roscore rosmaster rosout
+pkill -f ros
+
+# 2. 等待一下确保进程完全关闭
+sleep 2
+
+# 3. 重新启动（确保只有一个roscore）
+gnome-terminal -- bash -c "source /opt/ros/melodic/setup.bash; source /home/nvidia/catkin_wss/devel/setup.bash; roscore; exec bash"
+
+# 4. 等待roscore完全启动
+sleep 5
+
+sudo ifconfig eth0 192.168.1.100 netmask 255.255.255.0 up
+
+# 5. 启动其他节点
+gnome-terminal -- bash -c "source /opt/ros/melodic/setup.bash; source /home/nvidia/nrt_ws/devel/setup.bash; bash /home/nvidia/trackdrive_front_preview_20261104_36ea8d6c/verification/boot_vehicle_20261104_c16ec1224854/start_imu.sh; exec bash"
+
+# Start LiDAR driver, preprocessing, ground segmentation and clustering.
+gnome-terminal -- bash -c "source /opt/ros/melodic/setup.bash; source /home/nvidia/nrt_ws/devel/setup.bash; bash /home/nvidia/trackdrive_front_preview_20261104_36ea8d6c/verification/boot_vehicle_20261104_c16ec1224854/start_lidar.sh; exec bash"
+
+gnome-terminal -- bash -c "source /opt/ros/melodic/setup.bash; source /home/nvidia/nrt_ws/devel/setup.bash; source /home/nvidia/ebs_test_20261027/devel/setup.bash --extend; bash /home/nvidia/trackdrive_switch_20261107/start_trial.sh; exec bash" 
+
+
+gnome-terminal -- bash -c "source /opt/ros/melodic/setup.bash; source /home/nvidia/catkin_wsss/devel/setup.bash; rosrun luxiang camera1.py; exec bash"
+

@@ -1,0 +1,10 @@
+<launch>
+  <arg name="mode" default="legacy"/>
+  <arg name="run_active" default="false"/>
+  <arg name="log_dir" default="/tmp/run_diagnostics"/>
+  <node pkg="acceleration_event" type="run_diagnostics.py" name="run_diagnostics" output="screen">
+    <param name="mode" value="$(arg mode)"/>
+    <param name="run_active" value="$(arg run_active)"/>
+    <param name="log_dir" value="$(arg log_dir)"/>
+  </node>
+</launch>

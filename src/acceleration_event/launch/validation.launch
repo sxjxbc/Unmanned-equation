@@ -1,0 +1,14 @@
+<launch>
+  <!-- Legacy integration only. No hardware sensors or vehicle output. -->
+  <arg name="use_sim_time" default="false"/>
+  <arg name="synthetic_inputs" default="false"/>
+  <arg name="log_dir" default="/tmp/acceleration_validation_logs"/>
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+  <include file="$(find acceleration_event)/launch/acceleration_event.launch">
+    <arg name="enable_vehicle_output" value="false"/>
+    <arg name="enable_visualization" value="false"/>
+    <arg name="log_dir" value="$(arg log_dir)"/>
+  </include>
+  <node pkg="acceleration_event" type="validation_inputs.py" name="validation_inputs"
+        output="screen" if="$(arg synthetic_inputs)"/>
+</launch>

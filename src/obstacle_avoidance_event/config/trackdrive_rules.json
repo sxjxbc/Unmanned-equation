@@ -1,0 +1,16 @@
+{
+  "required_laps": 3,
+  "stop_zone_m": 30.0,
+  "ready_delay_s": 5.0,
+  "first_lap_speed_warning_mps": 0.5,
+  "later_lap_speed_warning_mps": 2.0,
+  "scoring_reference_min_mps": 1.5,
+  "min_track_width_m": 3.0,
+  "max_straight_m": 80.0,
+  "hairpin_min_outer_diameter_m": 9.0,
+  "lap_length_reference_m": [
+    200,
+    500
+  ],
+  "vehicle_output": false
+}

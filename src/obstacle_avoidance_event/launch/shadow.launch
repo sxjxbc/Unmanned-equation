@@ -1,0 +1,19 @@
+<launch>
+  <arg name="pose_topic" default="/vehicle_pose"/>
+  <arg name="cones_topic" default="/clustered_points"/>
+  <arg name="node_name" default="obstacle_avoidance_shadow"/>
+  <arg name="map_frame" default="map"/>
+  <arg name="aligned_cones_frame" default=""/>
+  <arg name="pose_reference" default="unconfirmed"/>
+  <arg name="control_mode" default="legacy_compatible"/>
+  <node pkg="obstacle_avoidance_event" type="shadow_node.py" name="$(arg node_name)" output="screen">
+    <rosparam command="load" file="$(find obstacle_avoidance_event)/config/shadow.yaml"/>
+    <param name="vehicle_output" value="false"/>
+    <param name="pose_topic" value="$(arg pose_topic)"/>
+    <param name="cones_topic" value="$(arg cones_topic)"/>
+    <param name="map_frame" value="$(arg map_frame)"/>
+    <param name="aligned_cones_frame" value="$(arg aligned_cones_frame)"/>
+    <param name="pose_reference" value="$(arg pose_reference)"/>
+    <param name="control_mode" value="$(arg control_mode)"/>
+  </node>
+</launch>

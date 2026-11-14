@@ -1,0 +1,72 @@
+[
+  {
+    "original": "docs/北理直线加速融合方案_2026-10-12.md",
+    "archived": "docs/archive/2026-10-19/docs/北理直线加速融合方案_2026-10-12.md",
+    "sha256": "B3074702822281B42A42A170937C203C888C648279C91B759A2B8C993781EF82"
+  },
+  {
+    "original": "docs/固定赛道坐标修正_2026-10-15.md",
+    "archived": "docs/archive/2026-10-19/docs/固定赛道坐标修正_2026-10-15.md",
+    "sha256": "A7B07CEFFF532A41645122E0D80DB03F2F23D73645D9F2F9E5AE69EBC3F41315"
+  },
+  {
+    "original": "docs/旧版失效保护修正_2026-10-15.md",
+    "archived": "docs/archive/2026-10-19/docs/旧版失效保护修正_2026-10-15.md",
+    "sha256": "492E8761AB6D66B9C1113E0E122B05E00F28C734D637828B4A66624A072CCFA8"
+  },
+  {
+    "original": "docs/雷达融合版运行与验证.md",
+    "archived": "docs/archive/2026-10-19/docs/雷达融合版运行与验证.md",
+    "sha256": "09F144F55604E781C54799835187B7E0C946CCFE29FCB41402CB45367B6EDD4C"
+  },
+  {
+    "original": "docs/启动可靠性与无输出验证_2026-10-15.md",
+    "archived": "docs/archive/2026-10-19/docs/启动可靠性与无输出验证_2026-10-15.md",
+    "sha256": "15349B576E261033F508DC8472F6CBCE5C742396F982C28CB775C81E38B7F734"
+  },
+  {
+    "original": "docs/启动与完整闭环检查_2026-10-19.md",
+    "archived": "docs/archive/2026-10-19/docs/启动与完整闭环检查_2026-10-19.md",
+    "sha256": "F3A0D0E17B711479D66C32E97F80BE325C1FB21C731A76AB1D98E3349BA6F08D"
+  },
+  {
+    "original": "docs/实车自动诊断使用说明.md",
+    "archived": "docs/archive/2026-10-19/docs/实车自动诊断使用说明.md",
+    "sha256": "CAAB4B4A111508E76676938C6B4BF7CA327093ABD57991A373C6A268129DB079"
+  },
+  {
+    "original": "docs/虚拟机ROS无输出验收_2026-10-19.md",
+    "archived": "docs/archive/2026-10-19/docs/虚拟机ROS无输出验收_2026-10-19.md",
+    "sha256": "08D9BAF21EC3B01ADF3F36C2DD9B13B7DB8CA7CE0223DC4FE0E858526A694346"
+  },
+  {
+    "original": "docs/直线加速模块交付文档.md",
+    "archived": "docs/archive/2026-10-19/docs/直线加速模块交付文档.md",
+    "sha256": "C94CE1070F86EA794C142FF036B333480477865EA22C78E1D569601E055CE668"
+  },
+  {
+    "original": "docs/ROS持续通信与故障注入_2026-10-19.md",
+    "archived": "docs/archive/2026-10-19/docs/ROS持续通信与故障注入_2026-10-19.md",
+    "sha256": "FBD11502A274C910FD3B27334C54F6CF6CC2D2EE9AF13C9C53B95CD171D5E56D"
+  },
+  {
+    "original": "src/acceleration_event/README.md",
+    "archived": "docs/archive/2026-10-19/src/acceleration_event/README.md",
+    "sha256": "98F03C10DBC7DDC7028BBEA40BFF50C86EAEDD6F4A7B274B1E566C2FE16DB9CF"
+  },
+  {
+    "original": "src/acceleration_event/DATA_QUALITY.md",
+    "archived": "docs/archive/2026-10-19/src/acceleration_event/DATA_QUALITY.md",
+    "sha256": "EC8A4DF998EB75C67429B7CD971952B8561CFD2E6FCF467511A735F71905C75D"
+  },
+  {
+    "original": "src/acceleration_event/docs/straight_logic_first_three.md",
+    "archived": "docs/archive/2026-10-19/src/acceleration_event/docs/straight_logic_first_three.md",
+    "sha256": "79E5DA476C59E28D581FAB1009F8036B7992BB279E960F5A0F0A4E5C4B777430"
+  },
+  {
+    "original": "src/lidar/LIDAR_SECTOR_PLAN.md",
+    "archived": "docs/archive/2026-10-19/src/lidar/LIDAR_SECTOR_PLAN.md",
+    "sha256": "CA692CB1C07893469815F3D482B126084CE7B01092D21A7CBB75BF22D58F179A"
+  }
+]

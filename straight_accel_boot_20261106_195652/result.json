@@ -1,0 +1,21 @@
+{
+  "rebooted": false, 
+  "updated": true, 
+  "current_nodes_restarted": false, 
+  "wrapper": "/home/nvidia/straight_accel_boot_20261106_195652/start_straight.sh", 
+  "next_boot": "original_straight_acceleration_75m", 
+  "log_dir": "/home/nvidia/straight_acceleration_logs", 
+  "changed_lines": [
+    27
+  ], 
+  "sensor_and_safety_lines_unchanged": true, 
+  "sha256": "508a2d2b6d74e2e9d48f329d4c9a0874a0ae1a4a7347360d5ab8095e3d0448b0", 
+  "backup": "/home/nvidia/straight_accel_boot_20261106_195652/test.sh.before", 
+  "checks": {
+    "road1s": true, 
+    "slope": true, 
+    "enabled": true, 
+    "finish75": true
+  }, 
+  "stage": "/home/nvidia/straight_accel_boot_20261106_195652"
+}
